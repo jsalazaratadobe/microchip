@@ -1,0 +1,79 @@
+{
+  "definitions": [
+    {
+      "title": "Carousel Solutions",
+      "id": "carousel-solutions",
+      "model": "carousel-solutions",
+      "filter": "carousel-solutions",
+      "plugins": {
+        "da": {
+          "name": "carousel-solutions",
+          "rows": 1,
+          "columns": 2
+        }
+      }
+    },
+    {
+      "title": "Slide",
+      "id": "carousel-solutions-item",
+      "model": "carousel-solutions-item",
+      "plugins": {
+        "da": {
+          "name": "carousel-solutions-item",
+          "rows": 1,
+          "columns": 2,
+          "fields": [
+            { "name": "image", "selector": "div:nth-child(1)>picture>img[src]" },
+            { "name": "imageAlt", "selector": "div:nth-child(1)>picture>img[alt]" },
+            { "name": "text", "selector": "div:nth-child(2)" }
+          ]
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "carousel-solutions",
+      "fields": [
+        {
+          "component": "text",
+          "name": "classes",
+          "label": "Style",
+          "valueType": "string",
+          "description": "Optional style variant for the carousel block"
+        }
+      ]
+    },
+    {
+      "id": "carousel-solutions-item",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Alt Text",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "name": "text",
+          "label": "Text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "carousel-solutions",
+      "components": ["carousel-solutions-item"]
+    }
+  ]
+}

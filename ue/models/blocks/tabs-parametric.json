@@ -1,0 +1,71 @@
+{
+  "definitions": [
+    {
+      "title": "Tabs Parametric",
+      "id": "tabs-parametric",
+      "model": "tabs-parametric",
+      "filter": "tabs-parametric",
+      "plugins": {
+        "da": {
+          "name": "tabs-parametric",
+          "rows": 1,
+          "columns": 1
+        }
+      }
+    },
+    {
+      "title": "Tab",
+      "id": "tabs-parametric-item",
+      "model": "tabs-parametric-item",
+      "plugins": {
+        "da": {
+          "name": "tabs-parametric-item",
+          "rows": 1,
+          "columns": 2,
+          "fields": [
+            { "name": "title", "selector": "div:nth-child(1)" },
+            { "name": "content", "selector": "div:nth-child(2)" }
+          ]
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "tabs-parametric",
+      "fields": [
+        {
+          "component": "text",
+          "name": "classes",
+          "label": "Style",
+          "valueType": "string",
+          "description": "Optional style variant for the tabs block"
+        }
+      ]
+    },
+    {
+      "id": "tabs-parametric-item",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Tab Title",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "name": "content",
+          "label": "Content",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "tabs-parametric",
+      "components": ["tabs-parametric-item"]
+    }
+  ]
+}

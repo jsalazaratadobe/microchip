@@ -1,0 +1,74 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "technology-solution",
+      "urls": [
+        "https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive"
+      ],
+      "representativeUrl": "https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive",
+      "coverageGaps": [],
+      "description": "Technology/solution landing page with hero banner, intro text, card grids, product tables, card carousel, and tabbed parametric charts",
+      "blocks": [
+        { "name": "hero-banner", "instances": [".basicbanner"] },
+        { "name": "cards-solutions", "instances": [".cardgrid:has(.mchp-card-item.card-sixty)"] },
+        { "name": "cards-resource", "instances": [".cardgrid:has(.mchp-card-item.card-one-hundred)"] },
+        { "name": "table-compare", "instances": [".simpletable table"] },
+        { "name": "carousel-solutions", "instances": [".cardcarousel"] },
+        { "name": "tabs-parametric", "instances": [".tabs.panelcontainer"] }
+      ],
+      "sections": [
+        {
+          "id": "sec-hero",
+          "name": "Hero Banner",
+          "selector": ".basicbanner",
+          "style": null,
+          "blocks": ["hero-banner"],
+          "defaultContent": []
+        },
+        {
+          "id": "sec-solutions",
+          "name": "Our Solutions for Motor Control",
+          "selector": ".cardgrid:has(.mchp-card-item.card-sixty)",
+          "style": null,
+          "blocks": ["cards-solutions"],
+          "defaultContent": []
+        },
+        {
+          "id": "sec-resources",
+          "name": "Additional Resources for Motor Control and Drive",
+          "selector": ".cardgrid:has(.mchp-card-item.card-one-hundred)",
+          "style": null,
+          "blocks": ["cards-resource"],
+          "defaultContent": []
+        },
+        {
+          "id": "sec-recommended-products",
+          "name": "Recommended Motor Control Products",
+          "selector": ".simpletable",
+          "style": null,
+          "blocks": ["table-compare"],
+          "defaultContent": []
+        },
+        {
+          "id": "sec-hw-sw-solutions",
+          "name": "Motor Control Hardware and Software Solutions",
+          "selector": ".cardcarousel",
+          "style": null,
+          "blocks": ["carousel-solutions"],
+          "defaultContent": []
+        },
+        {
+          "id": "sec-products",
+          "name": "Products (Parametric)",
+          "selector": ".tabs.panelcontainer",
+          "style": null,
+          "blocks": ["tabs-parametric"],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}

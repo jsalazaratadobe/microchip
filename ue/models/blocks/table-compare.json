@@ -1,0 +1,31 @@
+{
+  "definitions": [
+    {
+      "title": "Table Compare",
+      "id": "table-compare",
+      "model": "table-compare",
+      "plugins": {
+        "da": {
+          "name": "table-compare",
+          "rows": 1,
+          "columns": 1
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "table-compare",
+      "fields": [
+        {
+          "component": "text",
+          "name": "classes",
+          "label": "Style",
+          "valueType": "string",
+          "description": "Optional style variant (e.g. no-header) for the table"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

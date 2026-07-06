@@ -1,0 +1,37 @@
+{
+  "variantName": "cards-solutions",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-06T19:30:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive",
+    "originPage": "technology/solution landing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "solution",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "image + heading + cta",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "product/solution category grids",
+      "bordered white cards with line-art or icon imagery and a single Learn More CTA"
+    ],
+    "notSuitableFor": [
+      "cards with long descriptive body copy",
+      "cards with colored/branded tiles instead of product imagery"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/en-us/solutions/technologies/motor-control-and-drive"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-06T19:30:00.000Z"
+  }
+}
