@@ -149,6 +149,82 @@
     ]
   },
   {
+    "id": "cards-resource",
+    "fields": [
+      {
+        "component": "text",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "description": "Optional style variant for the cards block"
+      }
+    ]
+  },
+  {
+    "id": "cards-resource-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false,
+        "description": "Optional. Block renders without image when empty."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "cards-solutions",
+    "fields": [
+      {
+        "component": "text",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "description": "Optional style variant for the cards block"
+      }
+    ]
+  },
+  {
+    "id": "cards-solutions-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false,
+        "description": "Optional. Block renders without image when empty."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "cards",
     "fields": [
       {
@@ -178,6 +254,43 @@
         "label": "Image",
         "multi": false,
         "description": "Optional. Block renders without image when empty."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel-solutions",
+    "fields": [
+      {
+        "component": "text",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "description": "Optional style variant for the carousel block"
+      }
+    ]
+  },
+  {
+    "id": "carousel-solutions-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
       },
       {
         "component": "text",
@@ -301,6 +414,31 @@
         "name": "url",
         "label": "Fragment URL",
         "required": true
+      }
+    ]
+  },
+  {
+    "id": "hero-banner",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "valueType": "string"
       }
     ]
   },
@@ -446,6 +584,48 @@
   {
     "id": "social-share",
     "fields": []
+  },
+  {
+    "id": "table-compare",
+    "fields": [
+      {
+        "component": "text",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "description": "Optional style variant (e.g. no-header) for the table"
+      }
+    ]
+  },
+  {
+    "id": "tabs-parametric",
+    "fields": [
+      {
+        "component": "text",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "description": "Optional style variant for the tabs block"
+      }
+    ]
+  },
+  {
+    "id": "tabs-parametric-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Tab Title",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Content",
+        "valueType": "string"
+      }
+    ]
   },
   {
     "id": "tabs",

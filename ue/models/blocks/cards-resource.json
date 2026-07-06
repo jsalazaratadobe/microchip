@@ -1,0 +1,80 @@
+{
+  "definitions": [
+    {
+      "title": "Cards Resource",
+      "id": "cards-resource",
+      "model": "cards-resource",
+      "filter": "cards-resource",
+      "plugins": {
+        "da": {
+          "name": "cards-resource",
+          "rows": 1,
+          "columns": 2
+        }
+      }
+    },
+    {
+      "title": "Card",
+      "id": "cards-resource-item",
+      "model": "cards-resource-item",
+      "plugins": {
+        "da": {
+          "name": "cards-resource-item",
+          "rows": 1,
+          "columns": 2,
+          "fields": [
+            { "name": "image", "selector": "div:nth-child(1)>picture>img[src]" },
+            { "name": "imageAlt", "selector": "div:nth-child(1)>picture>img[alt]" },
+            { "name": "text", "selector": "div:nth-child(2)" }
+          ]
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "cards-resource",
+      "fields": [
+        {
+          "component": "text",
+          "name": "classes",
+          "label": "Style",
+          "valueType": "string",
+          "description": "Optional style variant for the cards block"
+        }
+      ]
+    },
+    {
+      "id": "cards-resource-item",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false,
+          "description": "Optional. Block renders without image when empty."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Alt Text",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "name": "text",
+          "label": "Text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "cards-resource",
+      "components": ["cards-resource-item"]
+    }
+  ]
+}

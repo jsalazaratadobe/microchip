@@ -1,0 +1,38 @@
+{
+  "variantName": "tabs-parametric",
+  "baseBlock": "tabs",
+  "version": "1.0.0",
+  "created": "2026-07-06T19:30:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive",
+    "originPage": "technology/solution landing page",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "data-listing",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "tab labels + per-tab data/document table panels",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "tabbed product/parametric data listings",
+      "tabbed document/download category listings",
+      "any tabbed interface whose panels contain tabular content"
+    ],
+    "notSuitableFor": [
+      "rich media tab panels with heavy imagery",
+      "content that should all be visible at once without interaction"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/en-us/solutions/technologies/motor-control-and-drive"],
+    "reuseCount": 2,
+    "lastUsed": "2026-07-06T19:30:00.000Z"
+  }
+}

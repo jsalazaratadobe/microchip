@@ -1,0 +1,122 @@
+/*
+ * Table Compare Block
+ * Product x motor-type comparison table.
+ * Navy header row (white text), zebra-striped body, borderless cells.
+ */
+
+.table-compare.block {
+  width: 100%;
+  overflow-x: auto;
+  font-family: var(--body-font-family);
+}
+
+.table-compare.block table {
+  width: 100%;
+  min-width: 760px;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgb(44 44 43);
+}
+
+/* Shared cell rules: no borders, long labels wrap within their column */
+.table-compare.block table th,
+.table-compare.block table td {
+  border: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* Header row: navy background, white text */
+.table-compare.block table thead th {
+  padding: 20px 28px 20px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(255 255 255);
+  text-align: left;
+  vertical-align: middle;
+  background-color: var(--link-color);
+}
+
+/* Body cells */
+.table-compare.block table tbody td {
+  padding: 20px 8px;
+  font-weight: 400;
+  vertical-align: middle;
+}
+
+/* First (category label) column: narrow, top-aligned, extra left padding */
+.table-compare.block table thead th:first-child,
+.table-compare.block table tbody td:first-child {
+  width: 12%;
+  padding-left: 24px;
+}
+
+.table-compare.block table tbody td:first-child {
+  padding-top: 20px;
+  padding-right: 8px;
+  padding-bottom: 20px;
+  vertical-align: top;
+}
+
+/* Zebra striping: odd body rows light gray, even rows white */
+.table-compare.block table tbody tr:nth-child(odd) {
+  background-color: rgb(249 249 249);
+}
+
+.table-compare.block table tbody tr:nth-child(even) {
+  background-color: rgb(255 255 255);
+}
+
+/* Cell paragraphs carry no default margin */
+.table-compare.block table th p,
+.table-compare.block table td p {
+  margin: 0;
+}
+
+/* Links: navy, semibold, no underline.
+   EDS auto-decorates lone cell links as `.button`; reset that here so
+   they render as plain inline text links matching the source. */
+main .table-compare.block table td a,
+main .table-compare.block table td a:any-link,
+main .table-compare.block table td a.button,
+main .table-compare.block table td a.button:any-link {
+  display: inline;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--link-color);
+  text-align: left;
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: normal;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+main .table-compare.block table td a.button::after {
+  content: none;
+}
+
+main .table-compare.block table td a:hover,
+main .table-compare.block table td a:focus-visible,
+main .table-compare.block table td a.button:hover,
+main .table-compare.block table td a.button:focus-visible {
+  color: var(--link-color);
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+/* Unwrap the button container spacing EDS adds around lone links */
+.table-compare.block table td .button-container {
+  margin: 0;
+}
