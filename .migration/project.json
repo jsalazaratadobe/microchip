@@ -1,10 +1,8 @@
 {
-  "type": "da",
   "sites": {
     "microchip": {
       "previewOrg": "jsalazaratadobe",
-      "previewSite": "microchip",
-      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json"
+      "previewSite": "microchip"
     }
   }
 }

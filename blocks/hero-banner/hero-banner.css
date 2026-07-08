@@ -22,18 +22,27 @@
   background-color: rgb(75 77 73);
   overflow: hidden;
 
-  /* content container: 45px vertical, 85px horizontal (mobile scaled down) */
-  padding: 32px var(--content-padding-inline);
+  /* vertical rhythm only; horizontal inset is handled by the inner
+     container so the title left edge matches body/breadcrumb content */
+  padding-block: 32px;
+  padding-inline: 0;
   min-height: 126px;
 }
 
-/* Title cell (row 2): sits above the background, left-aligned, constrained */
+/* Title cell (row 2): sits above the background, left-aligned. Uses the same
+   content width + inline padding as body sections so the title's left edge
+   aligns with body text and the breadcrumb. */
 .hero-banner > div:last-child {
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
   width: 100%;
-  max-width: 1270px;
+
+  /* match body .default-content-wrapper box (grid width + inline padding on
+     both sides) so the title's left edge aligns with body text/breadcrumb */
+  max-width: calc(var(--grid-container-width) + (2 * var(--content-padding-inline)));
   margin: 0 auto;
+  padding: 0 var(--content-padding-inline);
 }
 
 /* Background image cell (row 1): full-bleed picture behind content */
@@ -105,10 +114,4 @@
     rgb(65 182 230) 33.333% 66.666%,
     rgb(108 194 74) 66.666% 100%
   );
-}
-
-@media (width >= 900px) {
-  .hero-banner {
-    padding: 45px 85px;
-  }
 }

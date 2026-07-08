@@ -28,6 +28,10 @@
   gap: var(--carousel-gap);
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
+
+  /* align snapped cards to the start of the track's content box (not behind
+     the leading edge/arrow), so a snapped card is never partly clipped */
+  scroll-padding-left: 0;
   overflow: auto hidden;
   scrollbar-width: none;
 }
@@ -41,6 +45,10 @@
   flex: 0 0 var(--carousel-card-width);
   width: var(--carousel-card-width);
   scroll-snap-align: start;
+
+  /* force each swipe to settle on a card edge — a momentum swipe can't skip
+     past a snap point, so no card is ever left cut off mid-scroll */
+  scroll-snap-stop: always;
   display: flex;
   flex-direction: column;
   background-color: var(--background-color);
@@ -100,14 +108,18 @@
 }
 
 /* --- "Learn More" full-width buttons --- */
-.carousel-solutions .carousel-solutions-slide-content p:has(a) {
+.carousel-solutions .carousel-solutions-slide-content p:has(a),
+.carousel-solutions .carousel-solutions-slide-content .button-container {
   margin: 5px 0 0;
 }
 
-/* Push the first button paragraph to the bottom of the card so buttons
-   align at the bottom edge across cards of differing content length */
-.carousel-solutions .carousel-solutions-slide-content p:has(a):first-of-type,
-.carousel-solutions .carousel-solutions-slide-content .button-container:first-of-type {
+/* Push the button group to the bottom of the card so buttons align at the
+   bottom edge across cards of differing content length. Target the first
+   button paragraph — the one immediately preceded by a non-button element
+   (description/heading). `:first-of-type` failed here because the first <p>
+   is the description, not a button, so margin-top never applied. */
+.carousel-solutions .carousel-solutions-slide-content > :not(.button-container) + .button-container,
+.carousel-solutions .carousel-solutions-slide-content > :not(p:has(a)) + p:has(a) {
   margin-top: auto;
 }
 
