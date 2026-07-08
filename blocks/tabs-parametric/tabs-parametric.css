@@ -1,0 +1,181 @@
+/* ==========================================================================
+   tabs-parametric — Microchip parametric tabs (Products + Documentation).
+   Decorated DOM:
+     .tabs-parametric
+       .tabs-parametric-list[role=tablist]
+         button.tabs-parametric-tab[role=tab] > p
+       .tabs-parametric-panel[role=tabpanel] > table > thead/tbody
+   Values extracted from source computed styles.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------
+   Tablist: horizontal, wrapping row with a light rule beneath.
+   Source: display flex; flex-wrap wrap; border-bottom 1px solid rgb(182 183 185);
+           margin 15px 0.
+   ----------------------------------------------------------------------- */
+.tabs-parametric .tabs-parametric-list {
+  display: flex;
+
+  /* keep all tabs on a single line; scroll horizontally if they exceed the
+     container width rather than wrapping onto a second row */
+  flex-wrap: nowrap;
+  gap: 0;
+  margin: 15px 0;
+  padding: 0;
+  border-bottom: 1px solid rgb(182 183 185);
+  background-color: transparent;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs-parametric .tabs-parametric-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* -----------------------------------------------------------------------
+   Tab buttons: navy text, transparent background, no chrome except a
+   transparent bottom accent that turns orange when active.
+   Source: font 15px/24px "Open Sans" 600; color rgb(28 53 94);
+           padding 8px 16px; border-bottom 5px solid transparent.
+   ----------------------------------------------------------------------- */
+.tabs-parametric .tabs-parametric-list .tabs-parametric-tab {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 8px 16px;
+  border: 0;
+  border-bottom: 5px solid transparent;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--link-color);
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.tabs-parametric .tabs-parametric-list .tabs-parametric-tab:hover {
+  color: var(--link-hover-color);
+}
+
+/* Active tab: orange bottom-border accent indicator (source: 5px rgb(246 141 46)). */
+.tabs-parametric .tabs-parametric-list .tabs-parametric-tab[aria-selected='true'] {
+  border-bottom-color: rgb(246 141 46);
+  color: var(--link-color);
+  cursor: default;
+}
+
+/* -----------------------------------------------------------------------
+   Tab panels: no chrome; the table carries all the styling.
+   ----------------------------------------------------------------------- */
+.tabs-parametric .tabs-parametric-panel {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow-x: auto;
+}
+
+.tabs-parametric .tabs-parametric-panel[aria-hidden='true'] {
+  display: none;
+}
+
+/* -----------------------------------------------------------------------
+   Data tables inside panels.
+   Source: border-collapse separate; width 100%; font-size 15px; no borders.
+   ----------------------------------------------------------------------- */
+.tabs-parametric .tabs-parametric-panel table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  background-color: transparent;
+  font-size: 15px;
+  table-layout: auto;
+}
+
+/* Header row: navy background, white small-caps-weight text, left aligned.
+   Source th: bg rgb(28 53 94); color #fff; font 11px/20px 600;
+              padding 15px 1px 15px 30px; text-align left. */
+.tabs-parametric .tabs-parametric-panel table thead th {
+  padding: 15px 8px 15px 30px;
+  border: 0;
+  background-color: var(--link-color);
+  color: rgb(255 255 255);
+  font-family: var(--body-font-family);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: middle;
+  white-space: normal;
+}
+
+/* Body cells: dark-on-transparent, generous left padding, no borders.
+   Source td: font 15px/20px 400; color rgb(0 0 0 / 80%);
+              padding 15px 1px 15px 30px; vertical-align middle. */
+.tabs-parametric .tabs-parametric-panel table tbody td {
+  padding: 15px 8px 15px 30px;
+  border: 0;
+  color: rgb(0 0 0 / 80%);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Zebra striping: odd body rows tinted, even rows white (source rgb(249 249 249)). */
+.tabs-parametric .tabs-parametric-panel table tbody tr:nth-child(odd) {
+  background-color: rgb(249 249 249);
+}
+
+.tabs-parametric .tabs-parametric-panel table tbody tr:nth-child(even) {
+  background-color: rgb(255 255 255);
+}
+
+/* Table links: navy, un-underlined, semibold (source rgb(28 53 94); none; 600). */
+.tabs-parametric .tabs-parametric-panel table td a:any-link {
+  color: var(--link-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tabs-parametric .tabs-parametric-panel table td a:any-link:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Neutralize inherited paragraph typography inside tab labels and cells.
+   :is() gives all three targets uniform specificity; placed last in the file. */
+.tabs-parametric :is(.tabs-parametric-tab, thead th, tbody td) p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+/* Documentation tables (Title + Download) use a fixed 2-column layout so every
+   tab shares the same widths: Title fills 75% and wraps; the Download column is
+   a fixed 25% on the right. Scoped via :has() to header rows with exactly two
+   cells so the wide multi-column Products tables are unaffected. Placed last to
+   keep the higher-specificity :has() rules after the base th/td rules. */
+.tabs-parametric .tabs-parametric-panel table:has(thead th:nth-child(2):last-child) {
+  table-layout: fixed;
+}
+
+.tabs-parametric .tabs-parametric-panel table:has(thead th:nth-child(2):last-child) th:first-child,
+.tabs-parametric .tabs-parametric-panel table:has(thead th:nth-child(2):last-child) td:first-child {
+  width: 75%;
+  overflow-wrap: break-word;
+}
+
+.tabs-parametric .tabs-parametric-panel table:has(thead th:nth-child(2):last-child) th:last-child,
+.tabs-parametric .tabs-parametric-panel table:has(thead th:nth-child(2):last-child) td:last-child {
+  width: 25%;
+  white-space: nowrap;
+}

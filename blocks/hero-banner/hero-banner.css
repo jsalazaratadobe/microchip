@@ -1,0 +1,117 @@
+/*
+ * Hero Banner (variant of Microchip .basicbanner)
+ * Full-bleed dark navy banner: circuit-board background image, navy
+ * left-to-transparent gradient overlay, large white left-aligned title,
+ * and a tricolor (orange / blue / green) accent stripe beneath.
+ * Values extracted from source computed styles (migration-work/hero-banner-extracted.css).
+ */
+
+/* Full-bleed: escape the section max-width/padding */
+.hero-banner-container .hero-banner-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.hero-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+
+  /* fallback color behind the image (source: rgb(75, 77, 73)) */
+  background-color: rgb(75 77 73);
+  overflow: hidden;
+
+  /* vertical rhythm only; horizontal inset is handled by the inner
+     container so the title left edge matches body/breadcrumb content */
+  padding-block: 32px;
+  padding-inline: 0;
+  min-height: 126px;
+}
+
+/* Title cell (row 2): sits above the background, left-aligned. Uses the same
+   content width + inline padding as body sections so the title's left edge
+   aligns with body text and the breadcrumb. */
+.hero-banner > div:last-child {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  width: 100%;
+
+  /* match body .default-content-wrapper box (grid width + inline padding on
+     both sides) so the title's left edge aligns with body text/breadcrumb */
+  max-width: calc(var(--grid-container-width) + (2 * var(--content-padding-inline)));
+  margin: 0 auto;
+  padding: 0 var(--content-padding-inline);
+}
+
+/* Background image cell (row 1): full-bleed picture behind content */
+.hero-banner > div:first-child {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+}
+
+.hero-banner > div:first-child > div,
+.hero-banner > div:first-child p {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.hero-banner > div:first-child picture {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-banner > div:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* source background-position: 100% 50% (image anchored to the right) */
+  object-position: 100% 50%;
+}
+
+/* Navy gradient overlay: transparent on the right, solid navy on the left.
+   Source: linear-gradient(270deg, rgba(28,53,94,0) 0, rgba(28,53,94,0.506) 50.5%, rgb(28,53,94) 100%) */
+.hero-banner > div:first-child::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: linear-gradient(
+    270deg,
+    rgb(28 53 94 / 0%) 0%,
+    rgb(28 53 94 / 50.6%) 50.5%,
+    rgb(28 53 94) 100%
+  );
+}
+
+/* Title h1 (source: 36px / 600 / line-height 36px / white / left) */
+.hero-banner h1 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 36px;
+  text-align: left;
+  color: rgb(255 255 255);
+}
+
+/* Tricolor accent stripe beneath the banner (source: sibling .colorstripe,
+   3 equal bars 7px tall in a 12px band; orange | blue | green) */
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 7px;
+  z-index: 3;
+  background-image: linear-gradient(
+    to right,
+    rgb(246 141 46) 0 33.333%,
+    rgb(65 182 230) 33.333% 66.666%,
+    rgb(108 194 74) 66.666% 100%
+  );
+}

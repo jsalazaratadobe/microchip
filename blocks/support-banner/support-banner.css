@@ -1,0 +1,124 @@
+/* ==========================================================================
+   support-banner — Microchip "Support at Every Step" band.
+   Source layout: full-width light-gray band; constrained inner row
+   (max-width 1320px, padding 30px 20px) laid out as
+   [chat icon] · [title + subtitle] · [outline button] with the button
+   pushed to the right. Values from source computed styles.
+   ========================================================================== */
+
+.support-banner {
+  background-color: rgb(248 248 247);
+  margin: 0;
+}
+
+.support-banner > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* Chat icon (left) */
+.support-banner .support-banner-icon {
+  flex: 0 0 auto;
+}
+
+.support-banner .support-banner-icon p,
+.support-banner .support-banner-cta p {
+  margin: 0;
+}
+
+.support-banner .support-banner-icon img {
+  display: block;
+  width: 100px;
+  height: auto;
+
+  /* show the whole chat icon — override the global object-fit: cover +
+     aspect-ratio 16/9 that otherwise crop it to a fixed box */
+  object-fit: contain;
+  aspect-ratio: auto;
+}
+
+/* Title + subtitle (center, takes remaining space) */
+.support-banner .support-banner-text {
+  flex: 1 1 300px;
+}
+
+/* Subtitle: base paragraph typography. */
+.support-banner .support-banner-text p {
+  margin: 0;
+  color: rgb(0 0 0 / 80%);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+}
+
+/* subtitle sits directly beneath the title */
+.support-banner .support-banner-text h2 + p,
+.support-banner .support-banner-text p + p {
+  margin-top: 4px;
+}
+
+/* Title: heading, or the first paragraph when authored as plain text. */
+.support-banner .support-banner-text h2,
+.support-banner .support-banner-text p:first-child {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: rgb(0 0 0 / 80%);
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 33px;
+}
+
+/* Outline button (right) */
+.support-banner .support-banner-cta {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.support-banner .support-banner-cta a:any-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px 25px;
+  border: 1px solid var(--link-color);
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--link-color);
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.support-banner .support-banner-cta a:any-link:hover,
+.support-banner .support-banner-cta a:any-link:focus-visible {
+  background-color: var(--link-color);
+  color: var(--color-light);
+}
+
+@media (width < 700px) {
+  .support-banner > div {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .support-banner .support-banner-cta {
+    margin-left: 0;
+    width: 100%;
+  }
+}

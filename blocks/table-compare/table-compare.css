@@ -1,0 +1,120 @@
+/*
+ * table-compare — Microchip product comparison matrix.
+ * Values extracted from source computed styles (live microchip.com):
+ * navy header (rgb(28 53 94), white, 14px/600), striped body rows
+ * (grey rgb(249 249 249) / white), body text rgb(44 44 43) 14px, navy bold links.
+ */
+
+.table-compare {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-compare table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  /* fixed layout so the 7 columns share width evenly and fit without
+     horizontal scrolling; content wraps instead of widening columns */
+  table-layout: fixed;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+}
+
+/* Header: navy fill, white text, left-aligned (source .compare-table thead th).
+   Text wraps (no nowrap) and padding is tightened so all columns fit. */
+.table-compare thead th {
+  padding: 16px 10px;
+  background-color: rgb(28 53 94);
+  color: rgb(255 255 255);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19.6px;
+  text-align: left;
+  text-transform: none;
+  vertical-align: top;
+  overflow-wrap: break-word;
+}
+
+/* Body cells: dark grey text, top-aligned; text wraps within the column */
+.table-compare tbody td {
+  padding: 16px 10px;
+  color: rgb(44 44 43);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: break-word;
+}
+
+/* Zebra striping: odd rows grey, even rows white (source pattern) */
+.table-compare tbody tr:nth-child(odd) {
+  background-color: rgb(249 249 249);
+}
+
+.table-compare tbody tr:nth-child(even) {
+  background-color: rgb(255 255 255);
+}
+
+.table-compare th p,
+.table-compare td p {
+  margin: 0;
+
+  /* inherit the cell color: the header <p> would otherwise take the global
+     main p color (near-black) over the navy header, and body <p> the 80%-black */
+  color: inherit;
+}
+
+/* Links: navy, bold, plain inline text (source .compare-table a). Reset the
+   global EDS button styling that a lone cell link otherwise inherits. */
+.table-compare td .button-container {
+  margin: 0;
+}
+
+.table-compare td a:any-link,
+.table-compare td a.button:any-link {
+  display: inline;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: rgb(28 53 94);
+  font-size: inherit;
+  font-weight: 600;
+
+  /* allow wrapping: the global a.button sets nowrap, which would keep long
+     product names on one line and force horizontal scroll */
+  white-space: normal;
+  text-decoration: none;
+}
+
+/* Kill the global a.button shimmer sheen (::after gradient sweep on hover) */
+.table-compare td a.button:any-link::after,
+.table-compare td a.button:any-link::before {
+  content: none;
+}
+
+.table-compare td a:any-link:hover,
+.table-compare td a.button:any-link:hover,
+.table-compare td a:any-link:focus-visible,
+.table-compare td a.button:any-link:focus-visible {
+  background: none;
+  text-decoration: underline;
+}
+
+/* Row hover: teal fill, white text and links (source .simpletable tr:hover).
+   Placed last so these higher-specificity rules follow the base cell/link
+   rules above (avoids descending-specificity). */
+.table-compare tbody tr:hover {
+  background-color: rgb(21 126 172);
+}
+
+.table-compare tbody tr:hover td,
+.table-compare tbody tr:hover td p,
+.table-compare tbody tr:hover td a:any-link {
+  color: rgb(255 255 255);
+}

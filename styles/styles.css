@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -105,40 +107,40 @@
   --color-yellow-200: #ebd400;
   --color-yellow-300: #cab600;
 
-  /* semantic / named colors */
+  /* semantic / named colors – Microchip palette */
   --color-light: rgb(255 255 255);
   --color-dark: rgb(0 0 0);
-  --color-text: light-dark(var(--color-ink), var(--color-parchment));
-  --color-link: light-dark(var(--color-ink), var(--color-parchment));
-  --color-link-hover: light-dark(var(--color-rust), var(--color-gold));
-  --color-brand: var(--color-rust);
-  --color-accent: var(--color-gold);
+  --color-text: rgb(0 0 0);
+  --color-link: rgb(28 53 94);
+  --color-link-hover: rgb(20 40 74);
+  --color-brand: rgb(28 53 94);
+  --color-accent: rgb(246 141 46);
   --color-shaded: light-dark(var(--color-parchment), var(--color-card-dark));
 
-  /* fonts */
-  --font-family: montserrat, "Trebuchet MS", sans-serif;
-  --font-family-serif: "EB Garamond", georgia, serif;
+  /* fonts – Microchip uses Open Sans for body and headings */
+  --font-family: "Open Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  --font-family-serif: "Open Sans", "Helvetica Neue", helvetica, arial, sans-serif;
   --font-family-mono: "JetBrains Mono", "Courier New", monospace;
   --body-font-family: var(--font-family);
-  --heading-font-family: var(--font-family-serif);
+  --heading-font-family: var(--font-family);
 
-  /* heading sizes */
-  --heading-font-size-xxl: 32.44px;
-  --heading-font-size-xl: 28.83px;
-  --heading-font-size-l: 25.63px;
-  --heading-font-size-m: 22.78px;
-  --heading-font-size-s: 20.25px;
-  --heading-font-size-xs: 18px;
-  --heading-font-size-xxs: 16px;
-  --heading-line-height: 1.15;
+  /* heading sizes – Microchip scale (source computed values) */
+  --heading-font-size-xxl: 36px;
+  --heading-font-size-xl: 23px;
+  --heading-font-size-l: 20px;
+  --heading-font-size-m: 18px;
+  --heading-font-size-s: 17px;
+  --heading-font-size-xs: 16px;
+  --heading-font-size-xxs: 15px;
+  --heading-line-height: 1.2;
 
   /* body sizes */
   --body-font-size-xxxl: 25px;
   --body-font-size-xxl: 22px;
   --body-font-size-xl: 20px;
   --body-font-size-l: 18px;
-  --body-font-size-m: 16px;
-  --body-font-size-s: 14px;
+  --body-font-size-m: 15px;
+  --body-font-size-s: 15px;
   --body-font-size-xs: 12px;
   --body-line-height: 1.6;
 
@@ -146,10 +148,15 @@
   --nav-height: 64px;
   --header-height: var(--nav-height);
 
-  /* boilerplate compatibility – map to design tokens */
-  --background-color: light-dark(var(--color-parchment), var(--color-obsidian));
-  --light-color: var(--color-shaded);
-  --dark-color: var(--color-gray-500);
+  /* Reserved space for the fixed Microchip header (matches rendered height to
+     avoid layout shift before header.js measures the exact value). Mobile
+     collapses the primary nav row into the hamburger, so it is shorter. */
+  --nav-total-height: 150px;
+
+  /* boilerplate compatibility – map to Microchip design tokens */
+  --background-color: rgb(255 255 255);
+  --light-color: rgb(242 242 242);
+  --dark-color: rgb(28 53 94);
   --text-color: var(--color-text);
   --link-color: var(--color-link);
   --link-hover-color: var(--color-link-hover);
@@ -186,8 +193,6 @@
 @media (width >= 600px) {
   :root,
   :host {
-    --heading-font-size-xxl: 44px;
-    --heading-font-size-xl: 36px;
     --content-padding-inline: var(--space-l);
     --main-block-space: var(--space-xl);
     --section-block-space: var(--space-xl);
@@ -197,15 +202,7 @@
 @media (width >= 900px) {
   :root,
   :host {
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-    --heading-font-size-xxl: 64px;
-    --heading-font-size-xl: 48px;
-    --heading-font-size-l: 32px;
-    --heading-font-size-m: 24px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
+    --nav-total-height: 262px;
     --content-padding-inline: var(--space-xl);
     --section-block-space: var(--space-3xl);
   }
@@ -257,7 +254,7 @@ body.theme-dark {
 
 html {
   min-height: 100%;
-  scroll-padding-top: calc(var(--nav-height) + 1rem);
+  scroll-padding-top: calc(var(--nav-total-height, var(--nav-height)) + 1rem);
   scroll-behavior: smooth;
 }
 
@@ -271,11 +268,6 @@ body {
   margin: 0;
   box-sizing: border-box;
   background-color: var(--background-color);
-  background-image:
-    radial-gradient(ellipse 80% 50% at 12% 8%,
-      light-dark(rgb(197 160 89 / 9%), rgb(197 160 89 / 4%)) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 40% at 88% 82%,
-      light-dark(rgb(161 79 43 / 6%), rgb(161 79 43 / 3%)) 0%, transparent 50%);
   color: var(--text-color);
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
@@ -293,7 +285,7 @@ body.appear {
 }
 
 header {
-  height: var(--nav-height);
+  height: var(--nav-total-height, var(--nav-height));
 }
 
 header .header,
@@ -316,31 +308,32 @@ h6 {
   margin-top: 0.8em;
   margin-bottom: 0.4em;
   font-family: var(--heading-font-family);
-  font-weight: 500;
+  font-weight: 600;
   line-height: var(--heading-line-height);
   scroll-margin: 40px;
 }
 
 h1 {
   font-size: var(--heading-font-size-xxl);
-  letter-spacing: -0.02em;
 }
 
 h2 {
   font-size: var(--heading-font-size-xl);
-  letter-spacing: -0.015em;
 }
 
-h3 { font-size: var(--heading-font-size-m); }
-h4 { font-size: var(--heading-font-size-s); }
-h5 { font-size: var(--heading-font-size-xs); }
+/* Section headers: thin gray divider line beneath the title (source .mchp-title-hr:
+   1px solid rgb(182 183 185), full content width, 5px above / 15px below) */
+main h2 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgb(182 183 185);
+}
+
+h3 { font-size: var(--heading-font-size-l); }
+h4 { font-size: var(--heading-font-size-m); }
+h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xxs); }
-
-@media (width >= 600px) {
-  h3 { font-size: var(--heading-font-size-l); }
-  h4 { font-size: var(--heading-font-size-m); }
-  h5 { font-size: var(--heading-font-size-s); }
-}
 
 
 p,
@@ -351,6 +344,13 @@ pre,
 blockquote {
   margin-top: 0.8em;
   margin-bottom: 0.25em;
+}
+
+/* Microchip default content: paragraphs 15px / 24px, 80% black (source) */
+main p {
+  font-size: 15px;
+  line-height: 24px;
+  color: rgb(0 0 0 / 80%);
 }
 
 main ul,
@@ -420,36 +420,22 @@ button.button {
   gap: var(--space-xs);
   max-width: 100%;
   margin: 0;
-  border: 1px solid light-dark(var(--color-rust), var(--color-rust-bright));
+  border: 1px solid rgb(28 53 94);
   border-radius: 4px;
-  padding: 20px 50px;
+  padding: 10px 25px;
   font: inherit;
-  font-weight: 700;
-  font-size: 0.85rem;
-  line-height: 1.2;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 24px;
   text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  background-color: light-dark(var(--color-rust), var(--color-rust-bright));
-  background-image: linear-gradient(135deg, rgb(255 255 255 / 12%), rgb(0 0 0 / 8%));
+  text-transform: none;
+  letter-spacing: normal;
+  background-color: rgb(28 53 94);
+  background-image: none;
   color: var(--color-light);
   cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  transition: all 0.4s;
-}
-
-a.button:any-link::after,
-button.button::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 22%) 50%, transparent 70%);
-  transform: translateX(-120%);
-  transition: transform 0.55s ease;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
 input,
@@ -462,8 +448,8 @@ button {
 /* Primary variant */
 a.button.primary:any-link,
 button.button.primary {
-  border-color: var(--color-rust);
-  background-color: var(--color-rust);
+  border-color: rgb(28 53 94);
+  background-color: rgb(28 53 94);
   color: var(--color-light);
 }
 
@@ -471,27 +457,19 @@ a.button:any-link:hover,
 a.button:any-link:focus-visible,
 button.button:hover,
 button.button:focus-visible {
-  background-color: var(--color-gold);
-  border-color: var(--color-gold);
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px light-dark(rgb(161 79 43 / 30%), rgb(209 106 62 / 35%)), 0 0 0 1px var(--color-gold);
+  background-color: rgb(20 40 74);
+  border-color: rgb(20 40 74);
+  color: var(--color-light);
   cursor: pointer;
   text-decoration: none;
-}
-
-a.button:any-link:hover::after,
-a.button:any-link:focus-visible::after,
-button.button:hover::after,
-button.button:focus-visible::after {
-  transform: translateX(120%);
 }
 
 a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--color-gold);
-  background-color: var(--color-gold);
+  border-color: rgb(20 40 74);
+  background-color: rgb(20 40 74);
   color: var(--color-light);
 }
 
