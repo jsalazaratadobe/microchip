@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
+@import url('brand.css');
 
 /*
  * Copyright 2020 Adobe. All rights reserved.
@@ -117,21 +117,21 @@
   --color-accent: rgb(246 141 46);
   --color-shaded: light-dark(var(--color-parchment), var(--color-card-dark));
 
-  /* fonts – Microchip uses Open Sans for body and headings */
-  --font-family: "Open Sans", "Helvetica Neue", helvetica, arial, sans-serif;
-  --font-family-serif: "Open Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  /* fonts */
+  --font-family: "Open Sans", "Trebuchet MS", sans-serif;
+  --font-family-serif: "Open Sans", georgia, serif;
   --font-family-mono: "JetBrains Mono", "Courier New", monospace;
-  --body-font-family: var(--font-family);
-  --heading-font-family: var(--font-family);
+  --body-font-family: "Open Sans", sans-serif;
+  --heading-font-family: "Open Sans", sans-serif;
 
-  /* heading sizes – Microchip scale (source computed values) */
+  /* heading sizes – Microchip scale */
   --heading-font-size-xxl: 36px;
   --heading-font-size-xl: 23px;
   --heading-font-size-l: 20px;
   --heading-font-size-m: 18px;
   --heading-font-size-s: 17px;
   --heading-font-size-xs: 16px;
-  --heading-font-size-xxs: 15px;
+  --heading-font-size-xxs: 16px;
   --heading-line-height: 1.2;
 
   /* body sizes */
@@ -148,18 +148,13 @@
   --nav-height: 64px;
   --header-height: var(--nav-height);
 
-  /* Reserved space for the fixed Microchip header (matches rendered height to
-     avoid layout shift before header.js measures the exact value). Mobile
-     collapses the primary nav row into the hamburger, so it is shorter. */
-  --nav-total-height: 150px;
-
-  /* boilerplate compatibility – map to Microchip design tokens */
+  /* boilerplate compatibility – map to Microchip brand tokens */
   --background-color: rgb(255 255 255);
-  --light-color: rgb(242 242 242);
+  --light-color: #f2f2f2;
   --dark-color: rgb(28 53 94);
-  --text-color: var(--color-text);
-  --link-color: var(--color-link);
-  --link-hover-color: var(--color-link-hover);
+  --text-color: rgb(0 0 0);
+  --link-color: rgb(28 53 94);
+  --link-hover-color: rgb(20 38 68);
 
   /* heritage border */
   --border-heritage: 2px solid light-dark(rgb(161 79 43 / 20%), rgb(245 242 237 / 20%));
@@ -202,7 +197,9 @@
 @media (width >= 900px) {
   :root,
   :host {
-    --nav-total-height: 262px;
+    --body-font-size-m: 16px;
+    --body-font-size-s: 15px;
+    --body-font-size-xs: 14px;
     --content-padding-inline: var(--space-xl);
     --section-block-space: var(--space-3xl);
   }
@@ -270,7 +267,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: var(--body-font-family);
-  font-size: var(--body-font-size-m);
+  font-size: var(--body-font-size-s);
   line-height: var(--body-line-height);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -321,16 +318,11 @@ h2 {
   font-size: var(--heading-font-size-xl);
 }
 
-/* Section headers: thin gray divider line beneath the title (source .mchp-title-hr:
-   1px solid rgb(182 183 185), full content width, 5px above / 15px below) */
-main h2 {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid rgb(182 183 185);
+h3 {
+  font-size: var(--heading-font-size-l);
+  font-weight: 700;
 }
 
-h3 { font-size: var(--heading-font-size-l); }
 h4 { font-size: var(--heading-font-size-m); }
 h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xxs); }
@@ -346,7 +338,7 @@ blockquote {
   margin-bottom: 0.25em;
 }
 
-/* Microchip default content: paragraphs 15px / 24px, 80% black (source) */
+/* Microchip default content: exact paragraph values from source */
 main p {
   font-size: 15px;
   line-height: 24px;
@@ -396,7 +388,7 @@ a:any-link {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
-  text-decoration-color: light-dark(rgb(26 26 26 / 30%), rgb(245 242 237 / 30%));
+  font-weight: 600;
   overflow-wrap: break-word;
 }
 
@@ -420,22 +412,36 @@ button.button {
   gap: var(--space-xs);
   max-width: 100%;
   margin: 0;
-  border: 1px solid rgb(28 53 94);
-  border-radius: 4px;
-  padding: 10px 25px;
+  border: 1px solid var(--link-color);
+  border-radius: 2px;
+  padding: 12px 28px;
   font: inherit;
   font-weight: 600;
-  font-size: 15px;
-  line-height: 24px;
+  font-size: 0.9rem;
+  line-height: 1.2;
   text-align: center;
   text-decoration: none;
-  text-transform: none;
-  letter-spacing: normal;
-  background-color: rgb(28 53 94);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: var(--link-color);
   background-image: none;
   color: var(--color-light);
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 0.25s;
+}
+
+a.button:any-link::after,
+button.button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 22%) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.55s ease;
 }
 
 input,
@@ -457,8 +463,8 @@ a.button:any-link:hover,
 a.button:any-link:focus-visible,
 button.button:hover,
 button.button:focus-visible {
-  background-color: rgb(20 40 74);
-  border-color: rgb(20 40 74);
+  background-color: var(--link-hover-color);
+  border-color: var(--link-hover-color);
   color: var(--color-light);
   cursor: pointer;
   text-decoration: none;

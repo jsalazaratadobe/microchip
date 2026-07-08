@@ -1,0 +1,70 @@
+{
+  "definitions": [
+    {
+      "title": "Carousel Solutions",
+      "id": "carousel-solutions",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Carousel Solutions",
+              "filter": "carousel-solutions"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Carousel Solutions Slide",
+      "id": "carousel-solutions-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Carousel Solutions Slide",
+              "model": "carousel-solutions-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "carousel-solutions-item",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "media_image",
+          "label": "Background Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "media_imageAlt",
+          "value": "",
+          "label": "Bacgkround Alt"
+        },
+        {
+          "component": "richtext",
+          "name": "content_text",
+          "value": "",
+          "label": "Text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "carousel-solutions",
+      "components": [
+        "carousel-solutions-item"
+      ]
+    }
+  ]
+}

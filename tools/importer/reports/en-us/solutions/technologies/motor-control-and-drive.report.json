@@ -1,0 +1,19 @@
+{
+  "status": "success",
+  "url": "https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive",
+  "path": "en-us/solutions/technologies/motor-control-and-drive",
+  "timestamp": "2026-07-06T20:35:05.637Z",
+  "title": "Motor Control and Drive | Microchip Technology",
+  "template": "technology-solution",
+  "blocks": [
+    "hero-banner",
+    "cards-solutions",
+    "cards-solutions",
+    "cards-resource",
+    "cards-resource",
+    "table-compare",
+    "carousel-solutions",
+    "tabs-parametric",
+    "tabs-parametric"
+  ]
+}

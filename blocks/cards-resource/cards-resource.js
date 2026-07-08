@@ -9,8 +9,8 @@ export default function decorate(block) {
     moveInstrumentation(row, li);
     while (row.firstElementChild) li.append(row.firstElementChild);
     [...li.children].forEach((div) => {
-      if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-solutions-card-image';
-      else div.className = 'cards-solutions-card-body';
+      if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-resource-card-image';
+      else div.className = 'cards-resource-card-body';
     });
     ul.append(li);
   });

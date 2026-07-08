@@ -1,0 +1,115 @@
+/* cards-resource — "Additional Resources" card grid
+   Source: microchip.com .cardgrid:has(.mchp-card-item.card-one-hundred)
+   Values extracted from source computed styles (see migration-work/cards-resource-extracted.css).
+   Decorated EDS DOM: .cards-resource > ul > li
+     li > .cards-resource-card-image (picture)
+     li > .cards-resource-card-body (h3 + one or more <p><a>) */
+
+/* Grid: source uses grid-template-columns repeat(3, 1fr), gap 25px.
+   Mobile-first: single column, expand to 2 then 3 columns. */
+.cards-resource > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+}
+
+@media (width >= 600px) {
+  .cards-resource > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards-resource > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Card: white surface, subtle drop shadow, no border/radius (source .mchp-card) */
+.cards-resource > ul > li {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 29%);
+  overflow: hidden;
+}
+
+/* Image area: fixed 200px tall band, image contained (source card-one-hundred, object-fit: contain) */
+.cards-resource .cards-resource-card-image {
+  line-height: 0;
+}
+
+.cards-resource .cards-resource-card-image img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+/* Body: 20px padding, vertical stack (source .mchp-card-inner) */
+.cards-resource .cards-resource-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+}
+
+/* Heading: 20px/24px, weight 600, dark slate, underlined via bottom border
+   (source h3 + .mchp-card-title border-bottom) */
+.cards-resource .cards-resource-card-body h3 {
+  margin: 10px 0;
+  padding: 0 0 5px;
+  border-bottom: 1px solid rgb(182 183 185);
+  font-family: var(--body-font-family);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  color: rgb(52 51 62);
+}
+
+/* Links rendered as full-width solid navy buttons (source a.mchp-button.solid) */
+.cards-resource .cards-resource-card-body p {
+  margin: 5px 0 0;
+}
+
+.cards-resource .cards-resource-card-body p a,
+main .cards-resource .cards-resource-card-body p a:any-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 25px;
+  border: 0;
+  border-radius: 4px;
+  background-color: var(--link-color);
+  color: var(--color-light);
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: break-word;
+  text-overflow: clip;
+  transition: background-color 0.2s ease;
+}
+
+/* neutralize the global a.button shine sweep pseudo-element */
+.cards-resource .cards-resource-card-body p a::after {
+  content: none;
+}
+
+main .cards-resource .cards-resource-card-body p a:any-link:hover,
+main .cards-resource .cards-resource-card-body p a:any-link:focus-visible {
+  background-color: var(--link-hover-color);
+  color: var(--color-light);
+  text-decoration: none;
+}

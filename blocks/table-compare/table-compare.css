@@ -1,120 +1,122 @@
 /*
- * table-compare — Microchip product comparison matrix.
- * Values extracted from source computed styles (live microchip.com):
- * navy header (rgb(28 53 94), white, 14px/600), striped body rows
- * (grey rgb(249 249 249) / white), body text rgb(44 44 43) 14px, navy bold links.
+ * Table Compare Block
+ * Product x motor-type comparison table.
+ * Navy header row (white text), zebra-striped body, borderless cells.
  */
 
-.table-compare {
+.table-compare.block {
   width: 100%;
   overflow-x: auto;
+  font-family: var(--body-font-family);
 }
 
-.table-compare table {
+.table-compare.block table {
   width: 100%;
+  min-width: 760px;
+  table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0;
-
-  /* fixed layout so the 7 columns share width evenly and fit without
-     horizontal scrolling; content wraps instead of widening columns */
-  table-layout: fixed;
-  font-family: var(--body-font-family);
   font-size: 14px;
+  line-height: 1.4;
+  color: rgb(44 44 43);
 }
 
-/* Header: navy fill, white text, left-aligned (source .compare-table thead th).
-   Text wraps (no nowrap) and padding is tightened so all columns fit. */
-.table-compare thead th {
-  padding: 16px 10px;
-  background-color: rgb(28 53 94);
-  color: rgb(255 255 255);
+/* Shared cell rules: no borders, long labels wrap within their column */
+.table-compare.block table th,
+.table-compare.block table td {
+  border: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* Header row: navy background, white text */
+.table-compare.block table thead th {
+  padding: 20px 28px 20px 8px;
   font-size: 14px;
   font-weight: 600;
-  line-height: 19.6px;
+  color: rgb(255 255 255);
   text-align: left;
-  text-transform: none;
-  vertical-align: top;
-  overflow-wrap: break-word;
+  vertical-align: middle;
+  background-color: var(--link-color);
 }
 
-/* Body cells: dark grey text, top-aligned; text wraps within the column */
-.table-compare tbody td {
-  padding: 16px 10px;
-  color: rgb(44 44 43);
-  font-size: 14px;
+/* Body cells */
+.table-compare.block table tbody td {
+  padding: 20px 8px;
   font-weight: 400;
-  line-height: 1.4;
-  text-align: left;
-  vertical-align: top;
-  overflow-wrap: break-word;
+  vertical-align: middle;
 }
 
-/* Zebra striping: odd rows grey, even rows white (source pattern) */
-.table-compare tbody tr:nth-child(odd) {
+/* First (category label) column: narrow, top-aligned, extra left padding */
+.table-compare.block table thead th:first-child,
+.table-compare.block table tbody td:first-child {
+  width: 12%;
+  padding-left: 24px;
+}
+
+.table-compare.block table tbody td:first-child {
+  padding-top: 20px;
+  padding-right: 8px;
+  padding-bottom: 20px;
+  vertical-align: top;
+}
+
+/* Zebra striping: odd body rows light gray, even rows white */
+.table-compare.block table tbody tr:nth-child(odd) {
   background-color: rgb(249 249 249);
 }
 
-.table-compare tbody tr:nth-child(even) {
+.table-compare.block table tbody tr:nth-child(even) {
   background-color: rgb(255 255 255);
 }
 
-.table-compare th p,
-.table-compare td p {
-  margin: 0;
-
-  /* inherit the cell color: the header <p> would otherwise take the global
-     main p color (near-black) over the navy header, and body <p> the 80%-black */
-  color: inherit;
-}
-
-/* Links: navy, bold, plain inline text (source .compare-table a). Reset the
-   global EDS button styling that a lone cell link otherwise inherits. */
-.table-compare td .button-container {
+/* Cell paragraphs carry no default margin */
+.table-compare.block table th p,
+.table-compare.block table td p {
   margin: 0;
 }
 
-.table-compare td a:any-link,
-.table-compare td a.button:any-link {
+/* Links: navy, semibold, no underline.
+   EDS auto-decorates lone cell links as `.button`; reset that here so
+   they render as plain inline text links matching the source. */
+main .table-compare.block table td a,
+main .table-compare.block table td a:any-link,
+main .table-compare.block table td a.button,
+main .table-compare.block table td a.button:any-link {
   display: inline;
-  min-height: 0;
+  width: auto;
+  max-width: none;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
-  background: none;
-  color: rgb(28 53 94);
-  font-size: inherit;
+  font: inherit;
+  font-size: 14px;
   font-weight: 600;
-
-  /* allow wrapping: the global a.button sets nowrap, which would keep long
-     product names on one line and force horizontal scroll */
-  white-space: normal;
+  color: var(--link-color);
+  text-align: left;
   text-decoration: none;
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: normal;
+  background-color: transparent;
+  box-shadow: none;
 }
 
-/* Kill the global a.button shimmer sheen (::after gradient sweep on hover) */
-.table-compare td a.button:any-link::after,
-.table-compare td a.button:any-link::before {
+main .table-compare.block table td a.button::after {
   content: none;
 }
 
-.table-compare td a:any-link:hover,
-.table-compare td a.button:any-link:hover,
-.table-compare td a:any-link:focus-visible,
-.table-compare td a.button:any-link:focus-visible {
-  background: none;
+main .table-compare.block table td a:hover,
+main .table-compare.block table td a:focus-visible,
+main .table-compare.block table td a.button:hover,
+main .table-compare.block table td a.button:focus-visible {
+  color: var(--link-color);
   text-decoration: underline;
+  background-color: transparent;
 }
 
-/* Row hover: teal fill, white text and links (source .simpletable tr:hover).
-   Placed last so these higher-specificity rules follow the base cell/link
-   rules above (avoids descending-specificity). */
-.table-compare tbody tr:hover {
-  background-color: rgb(21 126 172);
-}
-
-.table-compare tbody tr:hover td,
-.table-compare tbody tr:hover td p,
-.table-compare tbody tr:hover td a:any-link {
-  color: rgb(255 255 255);
+/* Unwrap the button container spacing EDS adds around lone links */
+.table-compare.block table td .button-container {
+  margin: 0;
 }

@@ -1,0 +1,38 @@
+{
+  "variantName": "hero-banner",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-07-06T19:30:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive",
+    "originPage": "technology/solution landing page",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "compact",
+    "purpose": "hero",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "background image + heading",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "technology/solution landing pages",
+      "category header banners",
+      "title-only hero banners with a full-bleed background"
+    ],
+    "notSuitableFor": [
+      "heroes requiring a prominent call-to-action button",
+      "content-heavy heroes with subheadings and multiple paragraphs"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/en-us/solutions/technologies/motor-control-and-drive"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-06T19:30:00.000Z"
+  }
+}

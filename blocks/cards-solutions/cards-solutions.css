@@ -1,55 +1,38 @@
-/* cards-solutions — "Our Solutions for Motor Control" motor-type card grid.
-   Values extracted from source computed styles (live microchip.com .mchp-card).
-   3-up grid, borderless white cards with soft drop shadow, contained gray
-   line-art image (200px), title with divider underline, navy filled button. */
-
-/* 25px vertical spacing below each grid (source: .cardgrid margin-bottom),
-   so the two stacked solutions blocks are separated like the source */
-.cards-solutions {
-  margin-bottom: 25px;
-}
+/* cards-solutions — motor-type card grid.
+   Values extracted from source computed styles (see migration-work/cards-solutions-extracted.css). */
 
 .cards-solutions > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-
-  /* minmax(0, 1fr) keeps every column equal width; plain 1fr lets a wide
-     image or long link stretch its column and desync the grid */
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: 1fr;
   gap: 25px;
 }
 
 @media (width >= 600px) {
   .cards-solutions > ul {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (width >= 900px) {
   .cards-solutions > ul {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Card: white, borderless, soft drop shadow (source .mchp-card) */
+/* Card: borderless, white, soft drop shadow (source .mchp-card) */
 .cards-solutions > ul > li {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: var(--background-color);
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 29%);
 }
 
-/* Image: gray line-art, contained, centered, fixed 200px height
-   (source object-fit: contain; image is narrower than the card and centered) */
+/* Image: gray line-art, contained, centered, fixed height (source object-fit contain, 200px) */
 .cards-solutions .cards-solutions-card-image {
   line-height: 0;
-  text-align: center;
-
-  /* uniform clearance so wide photos don't touch the card edges, matching
-     the natural whitespace the narrow line-art images already have */
-  padding: 20px 20px 0;
 }
 
 .cards-solutions .cards-solutions-card-image p {
@@ -57,18 +40,10 @@
 }
 
 .cards-solutions .cards-solutions-card-image img {
-  display: inline-block;
-
-  /* logos/line-art fit within the box (never cropped) */
+  display: block;
   width: 100%;
   height: 200px;
   object-fit: contain;
-}
-
-/* photos fill the full image area so they don't float smaller with
-   whitespace like a contained landscape image would */
-.cards-solutions .cards-solutions-card-image img.cards-solutions-photo {
-  object-fit: cover;
 }
 
 /* Body: 20px padding (source .mchp-card-inner) */
@@ -81,62 +56,41 @@
 
 /* Title h3: 20px / 600, black, divider underline (source .mchp-title__text) */
 .cards-solutions .cards-solutions-card-body h3 {
-  /* no bottom margin: the flex column doesn't collapse margins, so the gap
-     below the divider is driven solely by the 5px .button-container margin —
-     keeping title→line, line→button and button→button spacing all equal */
-  margin: 10px 0 0;
-  padding: 0 0 5px;
+  margin: 10px 0;
+  padding-bottom: 5px;
   border-bottom: 1px solid rgb(182 183 185);
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
-
-  /* reserve two lines of title height (2 × 24px line-height) so single-line
-     titles align with two-line titles — keeps dividers and buttons level */
-  min-height: 48px;
-  color: rgb(0 0 0);
+  color: var(--text-color);
   text-transform: none;
-  text-align: left;
 }
 
-/* Uniform 5px gap above every button (source: button <p> margin 5px 0 0),
-   so title→button and button→button spacing is identical, including the
-   two-button Videos card */
+/* Push button block to the bottom of the card for even alignment */
 .cards-solutions .cards-solutions-card-body .button-container {
-  margin: 5px 0 0;
+  margin: 0;
+  margin-top: auto;
 }
 
-/* Learn More button: navy filled, radius 4px, full width, 46px tall, not
-   uppercase (source .mchp-button.mchp-button-regular.solid) */
+/* Learn More button: navy filled, radius 4px, full width, not uppercase (source .mchp-button.solid) */
 main .cards-solutions a.button:any-link {
-  box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  min-height: 46px;
   margin: 0;
-  border: 1px solid rgb(28 53 94);
+  border: 1px solid var(--link-color);
   border-radius: 4px;
   padding: 10px 25px;
-  background-color: rgb(28 53 94);
-  background-image: none;
-  color: #fff;
+  background-color: var(--link-color);
+  color: var(--color-light);
   font-size: 15px;
   font-weight: 600;
-
-  /* source .mchp-button: text wraps and stays centered (line-height 24px,
-     white-space normal) — long labels break to multiple lines */
-  line-height: 24px;
-  white-space: normal;
-  text-align: center;
   text-transform: none;
   letter-spacing: normal;
 }
 
 main .cards-solutions a.button:any-link:hover,
 main .cards-solutions a.button:any-link:focus-visible {
-  border-color: rgb(20 40 74);
-  background-color: rgb(20 40 74);
-  color: #fff;
+  background-color: var(--link-hover-color);
+  border-color: var(--link-hover-color);
+  color: var(--color-light);
 }

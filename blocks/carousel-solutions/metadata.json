@@ -1,0 +1,37 @@
+{
+  "variantName": "carousel-solutions",
+  "baseBlock": "carousel",
+  "version": "1.0.0",
+  "created": "2026-07-06T19:30:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.microchip.com/en-us/solutions/technologies/motor-control-and-drive",
+    "originPage": "technology/solution landing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "solution",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "image + heading + description + cta(s)",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "hardware/software solution highlight carousels",
+      "swipable card slides with image, heading, description and Learn More link(s), arrow navigation"
+    ],
+    "notSuitableFor": [
+      "single featured item (no rotation needed)",
+      "full-bleed image-only promotional banners"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/en-us/solutions/technologies/motor-control-and-drive"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-06T19:30:00.000Z"
+  }
+}

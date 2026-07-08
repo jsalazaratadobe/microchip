@@ -25,9 +25,27 @@
     ]
   },
   {
+    "id": "cards-resource",
+    "components": [
+      "cards-resource-item"
+    ]
+  },
+  {
+    "id": "cards-solutions",
+    "components": [
+      "cards-solutions-item"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "cards-item"
+    ]
+  },
+  {
+    "id": "carousel-solutions",
+    "components": [
+      "carousel-solutions-item"
     ]
   },
   {
@@ -51,6 +69,12 @@
     "id": "journey-map",
     "components": [
       "journey-map-step"
+    ]
+  },
+  {
+    "id": "tabs-parametric",
+    "components": [
+      "tabs-parametric-item"
     ]
   }
 ]
