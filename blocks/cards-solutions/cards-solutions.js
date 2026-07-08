@@ -15,8 +15,12 @@ export default function decorate(block) {
     ul.append(li);
   });
   ul.querySelectorAll('picture > img').forEach((img) => {
+    // Photos (JPEG) fill the image area; logos/line-art (PNG/SVG) fit within
+    // it so wide wordmarks like the Microchip University logo aren't cropped.
+    const isPhoto = /\.jpe?g(\?|$)/i.test(img.src);
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
+    if (isPhoto) optimizedPic.querySelector('img').classList.add('cards-solutions-photo');
     img.closest('picture').replaceWith(optimizedPic);
   });
   block.textContent = '';

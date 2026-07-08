@@ -1,4 +1,4 @@
-@import url('brand.css');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 
 /*
  * Copyright 2020 Adobe. All rights reserved.
@@ -107,31 +107,31 @@
   --color-yellow-200: #ebd400;
   --color-yellow-300: #cab600;
 
-  /* semantic / named colors */
+  /* semantic / named colors – Microchip palette */
   --color-light: rgb(255 255 255);
   --color-dark: rgb(0 0 0);
-  --color-text: light-dark(var(--color-ink), var(--color-parchment));
-  --color-link: light-dark(var(--color-ink), var(--color-parchment));
-  --color-link-hover: light-dark(var(--color-rust), var(--color-gold));
-  --color-brand: var(--color-rust);
-  --color-accent: var(--color-gold);
+  --color-text: rgb(0 0 0);
+  --color-link: rgb(28 53 94);
+  --color-link-hover: rgb(20 40 74);
+  --color-brand: rgb(28 53 94);
+  --color-accent: rgb(246 141 46);
   --color-shaded: light-dark(var(--color-parchment), var(--color-card-dark));
 
-  /* fonts */
-  --font-family: "Open Sans", "Trebuchet MS", sans-serif;
-  --font-family-serif: "Open Sans", georgia, serif;
+  /* fonts – Microchip uses Open Sans for body and headings */
+  --font-family: "Open Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  --font-family-serif: "Open Sans", "Helvetica Neue", helvetica, arial, sans-serif;
   --font-family-mono: "JetBrains Mono", "Courier New", monospace;
-  --body-font-family: "Open Sans", sans-serif;
-  --heading-font-family: "Open Sans", sans-serif;
+  --body-font-family: var(--font-family);
+  --heading-font-family: var(--font-family);
 
-  /* heading sizes – Microchip scale */
+  /* heading sizes – Microchip scale (source computed values) */
   --heading-font-size-xxl: 36px;
   --heading-font-size-xl: 23px;
   --heading-font-size-l: 20px;
   --heading-font-size-m: 18px;
   --heading-font-size-s: 17px;
   --heading-font-size-xs: 16px;
-  --heading-font-size-xxs: 16px;
+  --heading-font-size-xxs: 15px;
   --heading-line-height: 1.2;
 
   /* body sizes */
@@ -139,8 +139,8 @@
   --body-font-size-xxl: 22px;
   --body-font-size-xl: 20px;
   --body-font-size-l: 18px;
-  --body-font-size-m: 16px;
-  --body-font-size-s: 14px;
+  --body-font-size-m: 15px;
+  --body-font-size-s: 15px;
   --body-font-size-xs: 12px;
   --body-line-height: 1.6;
 
@@ -148,13 +148,18 @@
   --nav-height: 64px;
   --header-height: var(--nav-height);
 
-  /* boilerplate compatibility – map to Microchip brand tokens */
+  /* Reserved space for the fixed Microchip header (matches rendered height to
+     avoid layout shift before header.js measures the exact value). Mobile
+     collapses the primary nav row into the hamburger, so it is shorter. */
+  --nav-total-height: 150px;
+
+  /* boilerplate compatibility – map to Microchip design tokens */
   --background-color: rgb(255 255 255);
-  --light-color: #f2f2f2;
+  --light-color: rgb(242 242 242);
   --dark-color: rgb(28 53 94);
-  --text-color: rgb(0 0 0);
-  --link-color: rgb(28 53 94);
-  --link-hover-color: rgb(20 38 68);
+  --text-color: var(--color-text);
+  --link-color: var(--color-link);
+  --link-hover-color: var(--color-link-hover);
 
   /* heritage border */
   --border-heritage: 2px solid light-dark(rgb(161 79 43 / 20%), rgb(245 242 237 / 20%));
@@ -197,9 +202,7 @@
 @media (width >= 900px) {
   :root,
   :host {
-    --body-font-size-m: 16px;
-    --body-font-size-s: 15px;
-    --body-font-size-xs: 14px;
+    --nav-total-height: 262px;
     --content-padding-inline: var(--space-xl);
     --section-block-space: var(--space-3xl);
   }
@@ -251,7 +254,7 @@ body.theme-dark {
 
 html {
   min-height: 100%;
-  scroll-padding-top: calc(var(--nav-height) + 1rem);
+  scroll-padding-top: calc(var(--nav-total-height, var(--nav-height)) + 1rem);
   scroll-behavior: smooth;
 }
 
@@ -267,7 +270,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: var(--body-font-family);
-  font-size: var(--body-font-size-s);
+  font-size: var(--body-font-size-m);
   line-height: var(--body-line-height);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -282,7 +285,7 @@ body.appear {
 }
 
 header {
-  height: var(--nav-height);
+  height: var(--nav-total-height, var(--nav-height));
 }
 
 header .header,
@@ -318,11 +321,16 @@ h2 {
   font-size: var(--heading-font-size-xl);
 }
 
-h3 {
-  font-size: var(--heading-font-size-l);
-  font-weight: 700;
+/* Section headers: thin gray divider line beneath the title (source .mchp-title-hr:
+   1px solid rgb(182 183 185), full content width, 5px above / 15px below) */
+main h2 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgb(182 183 185);
 }
 
+h3 { font-size: var(--heading-font-size-l); }
 h4 { font-size: var(--heading-font-size-m); }
 h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xxs); }
@@ -338,7 +346,7 @@ blockquote {
   margin-bottom: 0.25em;
 }
 
-/* Microchip default content: exact paragraph values from source */
+/* Microchip default content: paragraphs 15px / 24px, 80% black (source) */
 main p {
   font-size: 15px;
   line-height: 24px;
@@ -388,7 +396,7 @@ a:any-link {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
-  font-weight: 600;
+  text-decoration-color: light-dark(rgb(26 26 26 / 30%), rgb(245 242 237 / 30%));
   overflow-wrap: break-word;
 }
 
@@ -412,36 +420,22 @@ button.button {
   gap: var(--space-xs);
   max-width: 100%;
   margin: 0;
-  border: 1px solid var(--link-color);
-  border-radius: 2px;
-  padding: 12px 28px;
+  border: 1px solid rgb(28 53 94);
+  border-radius: 4px;
+  padding: 10px 25px;
   font: inherit;
   font-weight: 600;
-  font-size: 0.9rem;
-  line-height: 1.2;
+  font-size: 15px;
+  line-height: 24px;
   text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background-color: var(--link-color);
+  text-transform: none;
+  letter-spacing: normal;
+  background-color: rgb(28 53 94);
   background-image: none;
   color: var(--color-light);
   cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  transition: all 0.25s;
-}
-
-a.button:any-link::after,
-button.button::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 22%) 50%, transparent 70%);
-  transform: translateX(-120%);
-  transition: transform 0.55s ease;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
 input,
@@ -454,8 +448,8 @@ button {
 /* Primary variant */
 a.button.primary:any-link,
 button.button.primary {
-  border-color: var(--color-rust);
-  background-color: var(--color-rust);
+  border-color: rgb(28 53 94);
+  background-color: rgb(28 53 94);
   color: var(--color-light);
 }
 
@@ -463,26 +457,19 @@ a.button:any-link:hover,
 a.button:any-link:focus-visible,
 button.button:hover,
 button.button:focus-visible {
-  background-color: var(--link-hover-color);
-  border-color: var(--link-hover-color);
+  background-color: rgb(20 40 74);
+  border-color: rgb(20 40 74);
   color: var(--color-light);
   cursor: pointer;
   text-decoration: none;
-}
-
-a.button:any-link:hover::after,
-a.button:any-link:focus-visible::after,
-button.button:hover::after,
-button.button:focus-visible::after {
-  transform: translateX(120%);
 }
 
 a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--color-gold);
-  background-color: var(--color-gold);
+  border-color: rgb(20 40 74);
+  background-color: rgb(20 40 74);
   color: var(--color-light);
 }
 
