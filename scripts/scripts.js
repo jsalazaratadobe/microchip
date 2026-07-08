@@ -72,6 +72,12 @@ function buildEmbedBlocks(main) {
     if (anchor.closest('.embed.block')) return;
     if (anchor.querySelector('.icon')) return;
 
+    // #_dnb opts out of embed auto-blocking; keep the link as a normal link
+    if (anchor.href.includes(DNB_HASH)) {
+      anchor.href = anchor.href.replace(DNB_HASH, '').replace(/#$/, '');
+      return;
+    }
+
     let url;
     try {
       url = new URL(anchor.href);

@@ -107,14 +107,14 @@
   --color-yellow-200: #ebd400;
   --color-yellow-300: #cab600;
 
-  /* semantic / named colors */
+  /* semantic / named colors – Microchip palette */
   --color-light: rgb(255 255 255);
   --color-dark: rgb(0 0 0);
-  --color-text: light-dark(var(--color-ink), var(--color-parchment));
-  --color-link: light-dark(var(--color-ink), var(--color-parchment));
-  --color-link-hover: light-dark(var(--color-rust), var(--color-gold));
-  --color-brand: var(--color-rust);
-  --color-accent: var(--color-gold);
+  --color-text: rgb(0 0 0);
+  --color-link: rgb(28 53 94);
+  --color-link-hover: rgb(20 40 74);
+  --color-brand: rgb(28 53 94);
+  --color-accent: rgb(246 141 46);
   --color-shaded: light-dark(var(--color-parchment), var(--color-card-dark));
 
   /* fonts */
@@ -139,8 +139,8 @@
   --body-font-size-xxl: 22px;
   --body-font-size-xl: 20px;
   --body-font-size-l: 18px;
-  --body-font-size-m: 16px;
-  --body-font-size-s: 14px;
+  --body-font-size-m: 15px;
+  --body-font-size-s: 15px;
   --body-font-size-xs: 12px;
   --body-line-height: 1.6;
 
@@ -251,7 +251,7 @@ body.theme-dark {
 
 html {
   min-height: 100%;
-  scroll-padding-top: calc(var(--nav-height) + 1rem);
+  scroll-padding-top: calc(var(--nav-total-height, var(--nav-height)) + 1rem);
   scroll-behavior: smooth;
 }
 
@@ -282,7 +282,7 @@ body.appear {
 }
 
 header {
-  height: var(--nav-height);
+  height: var(--nav-total-height, var(--nav-height));
 }
 
 header .header,
@@ -454,8 +454,8 @@ button {
 /* Primary variant */
 a.button.primary:any-link,
 button.button.primary {
-  border-color: var(--color-rust);
-  background-color: var(--color-rust);
+  border-color: rgb(28 53 94);
+  background-color: rgb(28 53 94);
   color: var(--color-light);
 }
 
@@ -470,19 +470,12 @@ button.button:focus-visible {
   text-decoration: none;
 }
 
-a.button:any-link:hover::after,
-a.button:any-link:focus-visible::after,
-button.button:hover::after,
-button.button:focus-visible::after {
-  transform: translateX(120%);
-}
-
 a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--color-gold);
-  background-color: var(--color-gold);
+  border-color: rgb(20 40 74);
+  background-color: rgb(20 40 74);
   color: var(--color-light);
 }
 
