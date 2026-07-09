@@ -324,10 +324,32 @@ function watchForTargetInjectedBlocks(main) {
 }
 
 
+/**
+ * Warm the nav fragment in the HTTP cache during the eager phase so the header
+ * (loaded lazily) fills its reserved space almost immediately instead of after
+ * a fresh round-trip. No visual change — just an earlier prefetch.
+ */
+function prefetchNav() {
+  try {
+    const meta = getMetadata('nav');
+    const path = (meta ? new URL(meta, window.location).pathname : null) || '/nav';
+    if (document.querySelector(`link[rel="prefetch"][href="${path}.plain.html"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = `${path}.plain.html`;
+    link.as = 'fetch';
+    link.crossOrigin = 'anonymous';
+    document.head.append(link);
+  } catch (e) {
+    // non-critical: header will still fetch the fragment in the lazy phase
+  }
+}
+
 async function loadEager(doc) {
   getLocale();
   decorateTemplateAndTheme();
   applyTheme();
+  prefetchNav();
 
   // Consent stub — wire to real CMP later; true for demo
   const isConsentGiven = true;

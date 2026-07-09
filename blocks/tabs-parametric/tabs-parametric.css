@@ -179,3 +179,18 @@
   width: 25%;
   white-space: nowrap;
 }
+
+/* Row hover: teal fill with white text and links, matching the
+   Recommended Motor Control Products (table-compare) block. Placed last so
+   these higher-specificity rules follow the base cell/link rules above. */
+.tabs-parametric .tabs-parametric-panel table tbody tr:hover {
+  background-color: rgb(21 126 172);
+}
+
+/* stylelint-disable-next-line no-descending-specificity -- intentional: hover
+   color must win over the earlier :has() width rules on td */
+.tabs-parametric .tabs-parametric-panel table tbody tr:hover td,
+.tabs-parametric .tabs-parametric-panel table tbody tr:hover td p,
+.tabs-parametric .tabs-parametric-panel table tbody tr:hover td a:any-link {
+  color: rgb(255 255 255);
+}

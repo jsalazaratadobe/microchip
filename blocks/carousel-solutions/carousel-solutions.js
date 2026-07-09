@@ -1,3 +1,4 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../ue/scripts/ue-utils.js';
 
 // Localized labels for carousel controls. Kept configurable/data-driven here
@@ -102,6 +103,16 @@ function createSlide(row, slideIndex, carouselId) {
 
   row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
     column.classList.add(`carousel-solutions-slide-${colIdx === 0 ? 'image' : 'content'}`);
+    // Serve a responsive, correctly-sized image (adds srcset + width/height)
+    // without changing the rendered size, which CSS controls. Cuts LCP/bytes.
+    if (colIdx === 0) {
+      const img = column.querySelector('picture > img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        img.closest('picture').replaceWith(optimizedPic);
+      }
+    }
     slide.append(column);
   });
 

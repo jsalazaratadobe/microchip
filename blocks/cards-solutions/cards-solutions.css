@@ -71,7 +71,8 @@
   object-fit: cover;
 }
 
-/* Body: 20px padding (source .mchp-card-inner) */
+/* Body: uniform 20px padding so the gap below the last button matches the
+   20px space on the left/right of the button. */
 .cards-solutions .cards-solutions-card-body {
   display: flex;
   flex-direction: column;
@@ -99,11 +100,11 @@
   text-align: left;
 }
 
-/* Uniform 5px gap above every button (source: button <p> margin 5px 0 0),
-   so title→button and button→button spacing is identical, including the
-   two-button Videos card */
+/* Uniform 20px gap above every button so the line→button spacing matches the
+   20px padding on the button's left/right/bottom. Applies to every button,
+   including the two-button Videos card, keeping button→button spacing equal. */
 .cards-solutions .cards-solutions-card-body .button-container {
-  margin: 5px 0 0;
+  margin: 20px 0 0;
 }
 
 /* Learn More button: navy filled, radius 4px, full width, 46px tall, not
