@@ -29,72 +29,130 @@ function collapseAll(nav) {
   nav.querySelectorAll('.nav-drop').forEach((li) => li.setAttribute('aria-expanded', 'false'));
 }
 
+/* Toggle a mega category open/closed on mobile (chevron drill-down). On
+   desktop the flyout is shown via CSS :hover, so this only runs on mobile. */
+function setupMegaCat(cat, flyout) {
+  const heading = cat.querySelector(':scope > p');
+  if (!heading) return;
+  let toggle = heading.querySelector('.nav-submenu-toggle');
+  if (!toggle) {
+    toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'nav-submenu-toggle';
+    heading.append(toggle);
+  }
+  const sync = () => {
+    const open = cat.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Collapse submenu' : 'Expand submenu');
+  };
+  sync();
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (DESKTOP.matches) return;
+    const open = cat.getAttribute('aria-expanded') === 'true';
+    // collapse sibling categories, then toggle this one
+    flyout.closest('.nav-mega-list').querySelectorAll(':scope > .nav-mega-cat').forEach((c) => {
+      if (c !== cat) c.setAttribute('aria-expanded', 'false');
+    });
+    cat.setAttribute('aria-expanded', open ? 'false' : 'true');
+    sync();
+  });
+}
+
+/*
+ * Microchip mega menu: a left sidebar of category rows; hovering a row reveals
+ * a flyout panel on the right with that category's subcategory groups + links.
+ * Nav structure per top item:
+ *   li > p>a(#mega)  +  ul.categories
+ *     li(category) > p>a  [+ ul.subcategories]
+ *       li(subcategory) > p>a  [+ ul of leaf links]
+ */
 function decorateMega(li) {
   const link = li.querySelector(':scope > p > a');
   const sub = li.querySelector(':scope > ul');
   if (!link || !sub) return;
 
-  const isMega = link.hash === '#mega' || sub.querySelector('picture, img');
-  if (link.hash === '#mega') link.href = link.href.replace(/#mega$/i, '');
-
+  const isMega = link.hash === '#mega';
+  if (isMega) link.href = link.href.replace(/#mega$/i, '');
   if (!isMega) return;
 
   li.classList.add('nav-drop-mega');
-  const items = [...sub.children].filter((c) => c.tagName === 'LI');
-  const promo = items.find((c) => c.querySelector('picture, img'));
-  const rest = items.filter((c) => c !== promo);
+  sub.classList.add('nav-mega-list');
 
-  let group = 0;
-  let row = 0;
-  rest.forEach((c) => {
-    const hasDirectLink = c.querySelector(':scope > a') || c.querySelector(':scope > p > a');
-    if (hasDirectLink) {
-      if (!group) group = 1;
-      c.classList.add('nav-mega-item');
-      c.style.setProperty('--mega-group', group);
-      row += 1;
-      c.style.setProperty('--mega-row', row);
-    } else {
-      group += 1;
-      row = 0;
-      c.classList.add('nav-mega-heading');
-      c.style.setProperty('--mega-group', group);
+  [...sub.children].filter((c) => c.tagName === 'LI').forEach((cat) => {
+    cat.classList.add('nav-mega-cat');
+    const flyout = cat.querySelector(':scope > ul');
+    if (!flyout) return;
+    cat.classList.add('has-flyout');
+    cat.setAttribute('aria-expanded', 'false');
+    flyout.classList.add('nav-mega-flyout');
+
+    // Each subcategory becomes a group: heading + optional link list.
+    [...flyout.children].filter((c) => c.tagName === 'LI').forEach((group) => {
+      group.classList.add('nav-mega-group');
+      const gHead = group.querySelector(':scope > p');
+      if (gHead) gHead.classList.add('nav-mega-group-title');
+      const gLinks = group.querySelector(':scope > ul');
+      if (gLinks) gLinks.classList.add('nav-mega-group-links');
+    });
+
+    // Flyout header: "Browse {Category}" (linked) + "view all" + close X.
+    const catLink = cat.querySelector(':scope > p > a');
+    if (catLink && !flyout.querySelector(':scope > .nav-mega-flyout-head')) {
+      const head = document.createElement('div');
+      head.className = 'nav-mega-flyout-head';
+      const title = document.createElement('a');
+      title.className = 'nav-mega-flyout-title';
+      title.href = catLink.getAttribute('href');
+      title.textContent = `Browse ${catLink.textContent.trim()}`;
+      const viewAll = document.createElement('a');
+      viewAll.className = 'nav-mega-flyout-viewall';
+      viewAll.href = catLink.getAttribute('href');
+      viewAll.textContent = 'view all';
+      const close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'nav-mega-flyout-close';
+      close.setAttribute('aria-label', 'Close submenu');
+      close.textContent = '×';
+      close.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        cat.setAttribute('aria-expanded', 'false');
+      });
+      head.append(title, viewAll, close);
+      flyout.prepend(head);
     }
+
+    setupMegaCat(cat, flyout);
   });
 
-  const cols = group || 1;
-  const totalCols = promo ? cols + 1 : cols;
-  if (promo) {
-    promo.classList.add('nav-mega-promo');
-    promo.style.setProperty('--mega-group', cols + 1);
-    sub.append(promo);
-  }
-  if (group) sub.classList.add('nav-mega-has-groups');
-
-  const inner = document.createElement('div');
-  inner.className = 'nav-mega-inner';
-  inner.style.setProperty('--mega-columns', String(totalCols));
-  while (sub.firstChild) inner.appendChild(sub.firstChild);
-  sub.appendChild(inner);
-
+  // Anchor the panel just below the nav row, and align its left edge with the
+  // nav content column (under the logo / PRODUCTS label) rather than the
+  // viewport edge.
   const sync = () => {
     if (!li.isConnected) return;
-    const trigger = li.querySelector(':scope > p');
-    const menu = li.querySelector(':scope > ul');
-    if (!trigger || !menu) return;
     const navRow = li.closest('.nav-primary-row');
-    if (navRow) {
+    const sectionsEl = li.closest('.nav-sections');
+    if (navRow && sub) {
       const rect = navRow.getBoundingClientRect();
-      menu.style.setProperty('--mega-top', `${rect.bottom}px`);
+      sub.style.setProperty('--mega-top', `${Math.round(rect.bottom)}px`);
     }
-    const t = trigger.getBoundingClientRect();
-    const m = menu.getBoundingClientRect();
-    const x = t.left + t.width / 2 - m.left;
-    menu.style.setProperty('--mega-pointer-x', `${Math.round(x)}px`);
+    if (sectionsEl && sub) {
+      const left = Math.round(sectionsEl.getBoundingClientRect().left);
+      sub.style.setProperty('--mega-left', `${left}px`);
+    }
   };
   li.megaSync = sync;
   sync();
-  window.addEventListener('resize', sync);
+  // rAF-throttle so multiple mega triggers don't each force a synchronous
+  // reflow on every resize tick.
+  let rafId = 0;
+  window.addEventListener('resize', () => {
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => { rafId = 0; sync(); });
+  });
 }
 
 function setupDropdown(li) {
@@ -322,6 +380,14 @@ function toggleMobile(nav, open, body) {
   body.style.overflowY = isOpen && !DESKTOP.matches ? 'hidden' : '';
   nav.setAttribute('aria-expanded', isOpen);
   nav.querySelector('.nav-hamburger button')?.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+
+  // The mobile slide-in panel and its dimmed backdrop are anchored just below
+  // the search row, so the utility + logo + search stay visible above them.
+  if (isOpen && !DESKTOP.matches) {
+    const mainRow = nav.querySelector('.nav-main-row');
+    const top = mainRow ? Math.round(mainRow.getBoundingClientRect().bottom) : 0;
+    nav.style.setProperty('--nav-panel-top', `${top}px`);
+  }
 }
 
 const NAV_ITEMS = '.nav-sections > ul > li';
@@ -407,7 +473,11 @@ export default async function decorate(block) {
   });
 
   eventRoot.addEventListener('click', (e) => {
-    if (!DESKTOP.matches && nav.getAttribute('aria-expanded') === 'true' && !nav.contains(e.target)) {
+    if (DESKTOP.matches || nav.getAttribute('aria-expanded') !== 'true') return;
+    // Close when tapping outside the nav, or on the dimmed area beside the
+    // slide-in panel (the primary row itself, not its list/backdrop children).
+    const onBackdrop = e.target === primaryRow;
+    if (!nav.contains(e.target) || onBackdrop) {
       toggleMobile(nav, false, body);
     }
   });
@@ -437,8 +507,16 @@ export default async function decorate(block) {
     if (h) document.documentElement.style.setProperty('--nav-total-height', `${Math.round(h)}px`);
   };
   syncHeight();
+  // The ResizeObserver already fires syncHeight whenever the header's size
+  // changes (including on viewport resize), so a separate throttled resize
+  // listener would just duplicate that work and force extra reflows.
   if (typeof ResizeObserver !== 'undefined') {
     new ResizeObserver(syncHeight).observe(wrapper);
+  } else {
+    let rafId = 0;
+    window.addEventListener('resize', () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => { rafId = 0; syncHeight(); });
+    });
   }
-  window.addEventListener('resize', syncHeight);
 }

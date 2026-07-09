@@ -246,6 +246,13 @@
     padding: 0 40px;
   }
 
+  /* Show exactly 4 complete cards: each fills a quarter of the track width
+     after subtracting the 3 inter-card gaps, so no partial card peeks in. */
+  .carousel-solutions .carousel-solutions-slide {
+    flex: 0 0 calc((100% - (3 * var(--carousel-gap))) / 4);
+    width: calc((100% - (3 * var(--carousel-gap))) / 4);
+  }
+
   /* Arrows sit slightly outside the track on desktop */
   .carousel-solutions .carousel-solutions-navigation-buttons button.slide-prev {
     margin-left: -20px;
