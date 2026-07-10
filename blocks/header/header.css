@@ -3,7 +3,10 @@
 header {
   --nav-navy: rgb(28 53 94);
   --nav-band-bg: rgb(241 242 242);
-  --nav-link-blue: rgb(21 126 172);
+
+  /* Darkened from the source rgb(21 126 172) (~4.0:1 on the gray utility band)
+     to meet WCAG AA 4.5:1 for link/breadcrumb text. */
+  --nav-link-blue: rgb(21 110 150);
   --nav-hover-color: rgb(28 53 94);
   --nav-text: rgb(0 0 0 / 80%);
   --nav-max-width: 1264px;
@@ -71,12 +74,10 @@ header nav .nav-utility-row p {
   text-align: center;
 }
 
+/* Underlined by default: this link sits inline within the utility sentence,
+   so color alone must not be what distinguishes it (WCAG 1.4.1). */
 header nav .nav-utility-row a:any-link {
   color: var(--nav-link-blue);
-  text-decoration: none;
-}
-
-header nav .nav-utility-row a:any-link:hover {
   text-decoration: underline;
 }
 
