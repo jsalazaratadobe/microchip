@@ -345,11 +345,35 @@ function prefetchNav() {
   }
 }
 
+/**
+ * Preload the self-hosted brand font (Open Sans) during the eager phase so it
+ * downloads immediately, before first paint. Paired with `font-display:
+ * optional` on the @font-face, this makes the real font available in time for
+ * the initial render — so the page never paints in a fallback and then swaps
+ * (which on mobile shows a brief faux-bold/italic flash).
+ */
+function preloadBrandFont() {
+  try {
+    const href = `${window.hlx.codeBasePath}/fonts/open-sans.woff2`;
+    if (document.querySelector(`link[rel="preload"][href="${href}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'font';
+    link.type = 'font/woff2';
+    link.href = href;
+    link.crossOrigin = 'anonymous';
+    document.head.append(link);
+  } catch (e) {
+    // non-critical: font still loads via the stylesheet, just slightly later
+  }
+}
+
 async function loadEager(doc) {
   getLocale();
   decorateTemplateAndTheme();
   applyTheme();
   prefetchNav();
+  preloadBrandFont();
 
   // Consent stub — wire to real CMP later; true for demo
   const isConsentGiven = true;

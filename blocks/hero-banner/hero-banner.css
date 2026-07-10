@@ -89,6 +89,14 @@
   );
 }
 
+/* All banner text is white so it always reads on the dark background,
+   regardless of what the author types (headings, paragraphs, links). */
+/* stylelint-disable-next-line no-descending-specificity */
+.hero-banner > div:last-child,
+.hero-banner > div:last-child :is(h1, h2, h3, h4, h5, h6, p, a, li, span) {
+  color: rgb(255 255 255);
+}
+
 /* Title h1 (source: 36px / 600 / line-height 36px / white / left) */
 .hero-banner h1 {
   margin: 0;
@@ -97,7 +105,12 @@
   font-weight: 600;
   line-height: 36px;
   text-align: left;
-  color: rgb(255 255 255);
+}
+
+/* Links in the banner stay white but keep an underline so they're
+   distinguishable from surrounding white text. */
+.hero-banner > div:last-child a:any-link {
+  text-decoration: underline;
 }
 
 /* Tricolor accent stripe beneath the banner (source: sibling .colorstripe,
