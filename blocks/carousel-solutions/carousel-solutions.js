@@ -108,7 +108,13 @@ function createSlide(row, slideIndex, carouselId) {
     if (colIdx === 0) {
       const img = column.querySelector('picture > img');
       if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        // Cards show ~280px wide (mobile) to a quarter-track (desktop). Serve a
+        // small default with a larger source only for wide viewports so phones
+        // don't fetch a 750px image for a ~280px slot.
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [
+          { media: '(min-width: 900px)', width: '750' },
+          { width: '450' },
+        ]);
         moveInstrumentation(img, optimizedPic.querySelector('img'));
         img.closest('picture').replaceWith(optimizedPic);
       }

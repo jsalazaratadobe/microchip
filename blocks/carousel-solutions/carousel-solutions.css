@@ -217,20 +217,28 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+
+  /* no inter-dot gap: each button is a 24px tap target (padding around a 12px
+     dot), and the targets sit flush so the row stays visually compact */
+  gap: 0;
   margin: 0;
-  padding: 16px 0 0;
+  padding: 8px 0 0;
 }
 
+/* 24px minimum tap target (WCAG 2.5.8 / best practices): a 12px visible dot
+   drawn via background-clip inside 6px of transparent padding, so the button
+   is 24×24 while the dot still looks 12px. */
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel-solutions .carousel-solutions-slide-indicator button {
+  box-sizing: content-box;
   width: 12px;
   height: 12px;
   margin: 0;
-  padding: 0;
+  padding: 6px;
   border: 0;
   border-radius: 50%;
   background-color: var(--color-gray-200);
+  background-clip: content-box;
   cursor: pointer;
   transition: background-color 0.2s;
 }
