@@ -350,6 +350,25 @@ function buildAccount(accountSection) {
   return wrap;
 }
 
+/* Name of the current page, used for the final breadcrumb crumb. The nav
+   fragment is shared across pages, so its trailing crumb can't be page-specific
+   — derive it here from the page's own metadata/heading/URL instead. */
+function getCurrentPageName() {
+  // Strip a trailing site-name suffix (e.g. "Foo | Microchip Technology" or
+  // "Foo - Microchip") so the crumb shows only the page name.
+  // Require whitespace before the separator so hyphenated names ("Wi-Fi
+  // Solutions") aren't truncated — only real " | Site" / " - Site" suffixes go.
+  const stripSuffix = (s) => s.replace(/\s+[|–—-]\s+.*$/, '').trim() || s.trim();
+  const metaTitle = getMetadata('og:title') || getMetadata('breadcrumb-title');
+  if (metaTitle) return stripSuffix(metaTitle);
+  const h1 = document.querySelector('main h1');
+  if (h1?.textContent.trim()) return h1.textContent.trim();
+  const slug = window.location.pathname.replace(/\/$/, '').split('/').pop() || '';
+  return slug.replace(/\.html$/, '').split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
 /* Row 4: breadcrumb – add " / " separators between the list items */
 function buildBreadcrumb(breadcrumbSection) {
   const list = breadcrumbSection.querySelector(':scope > ul');
@@ -372,6 +391,11 @@ function buildBreadcrumb(breadcrumbSection) {
     else inner.className = 'nav-breadcrumb-link';
     nav.append(inner);
   });
+
+  // The final crumb represents the current page; override it with the page's
+  // own name so each page shows its own title (e.g. "Machine Learning").
+  const current = nav.querySelector('.nav-breadcrumb-current');
+  if (current) current.textContent = getCurrentPageName();
   return nav;
 }
 
