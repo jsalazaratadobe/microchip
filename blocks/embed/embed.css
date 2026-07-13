@@ -79,3 +79,76 @@
   border-left: 14px solid rgb(255 255 255 / 90%);
   margin-left: 4px;
 }
+
+/* ==========================================================================
+   Video Column variant — headline + body (left), embedded video (right).
+   Matches the Microchip data-center "player" block: two equal columns that
+   stack on mobile. Values from source computed styles.
+   ========================================================================== */
+.embed.video-column {
+  max-width: var(--nav-max-width, 1264px);
+  margin-inline: auto;
+  text-align: start;
+}
+
+.embed.video-column > div:not(.embed-video-column-heading) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l, 24px);
+  align-items: center;
+}
+
+@media (width >= 900px) {
+  .embed.video-column > div:not(.embed-video-column-heading) {
+    flex-direction: row;
+  }
+}
+
+.embed.video-column .embed-video-column-text,
+.embed.video-column .embed-video-column-media {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Full-width heading row above the two columns, with the same divider as other
+   section headings so the underline runs edge to edge. Override the base
+   `.embed > div` flex/centering so the heading (and its divider) fills width. */
+.embed.video-column .embed-video-column-heading {
+  display: block;
+  width: 100%;
+  text-align: start;
+}
+
+.embed.video-column .embed-video-column-heading :is(h1, h2, h3) {
+  margin: 0 0 var(--space-l, 24px);
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgb(182 183 185);
+  font-family: var(--heading-font-family);
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-color, rgb(0 0 0));
+}
+
+.embed.video-column .embed-video-column-text p {
+  margin: 0 0 15px;
+  font-size: 15px;
+  line-height: 24px;
+  color: rgb(0 0 0 / 80%);
+}
+
+.embed.video-column .embed-video-column-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Video keeps a 16:9 frame; the inner .embed player fills it */
+.embed.video-column .embed-video-column-media .embed {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+.embed.video-column .embed-video-column-media .embed > div {
+  display: block;
+}

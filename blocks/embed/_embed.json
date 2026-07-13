@@ -1,0 +1,41 @@
+{
+  "definitions": [
+    {
+      "title": "Embed (Video Column)",
+      "id": "embed-video-column",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Embed (Video Column)",
+              "model": "embed-video-column",
+              "classes": "video-column"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "embed-video-column",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "text",
+          "value": "",
+          "label": "Headline & Body",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "video",
+          "label": "Video Link",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
