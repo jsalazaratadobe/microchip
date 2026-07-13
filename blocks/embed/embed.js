@@ -91,7 +91,62 @@ const loadEmbed = (block, link, autoplay, fixedHeight) => {
   block.classList.add('embed-is-loaded');
 };
 
+/*
+ * Video Column variant: two columns — a headline + body on the left and an
+ * embedded video on the right (matches the Microchip data-center "player"
+ * block). Authoring contract is a single row with two cells:
+ *   | text (heading + paragraphs) | video link |
+ */
+function decorateVideoColumn(block) {
+  const cells = [...block.querySelectorAll(':scope > div > div')];
+  const isVideoLink = (a) => /youtube\.com|youtu\.be|vimeo\.com/i.test(a.href);
+
+  // The video column is the cell holding a video URL (the text column may also
+  // contain links, e.g. a CTA, so match on the video host, not just any <a>).
+  const videoCell = cells.find((c) => [...c.querySelectorAll('a')].some(isVideoLink))
+    || cells[cells.length - 1];
+  const textCell = cells.find((c) => c !== videoCell) || cells[0];
+
+  const link = [...videoCell.querySelectorAll('a')].find(isVideoLink)?.href
+    || videoCell.querySelector('a')?.href;
+  if (!link) return;
+
+  const row = block.querySelector(':scope > div');
+  textCell.classList.add('embed-video-column-text');
+  videoCell.classList.add('embed-video-column-media');
+  videoCell.textContent = '';
+
+  // Lift the leading heading out to a full-width row above the two columns so
+  // its divider underline spans the full content width, matching other section
+  // headings (rather than being confined to the left column).
+  const heading = textCell.querySelector(':scope > h1, :scope > h2, :scope > h3');
+  if (heading) {
+    const head = document.createElement('div');
+    head.className = 'embed-video-column-heading';
+    head.append(heading);
+    block.prepend(head);
+  }
+
+  const media = document.createElement('div');
+  media.className = 'embed embed-video-column-player';
+  videoCell.append(media);
+
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) {
+      observer.disconnect();
+      loadEmbed(media, link, false, null);
+    }
+  });
+  observer.observe(media);
+  return row;
+}
+
 export default function decorate(block) {
+  if (block.classList.contains('video-column')) {
+    decorateVideoColumn(block);
+    return;
+  }
+
   const placeholder = block.querySelector('picture');
   const link = block.querySelector('a').href;
   const fixedHeight = getFixedHeight(block);
