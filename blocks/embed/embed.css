@@ -80,6 +80,85 @@
   margin-left: 4px;
 }
 
+/* --- Click-to-play facade (button wrapper) --- */
+.embed .embed-facade,
+.embed.embed-facade {
+  width: 100%;
+}
+
+/* When .embed-placeholder is itself the clickable button (facade) */
+button.embed-placeholder {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgb(0 0 0 / 5%);
+  cursor: pointer;
+}
+
+/* center the play badge over the poster */
+button.embed-placeholder .embed-placeholder-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+button.embed-placeholder img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+button.embed-placeholder:hover img {
+  transform: scale(1.03);
+}
+
+/* Play badge for the facade (a span, not a nested button) */
+.embed-placeholder-play-btn {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border: 2px solid rgb(255 255 255 / 80%);
+  border-radius: 999px;
+  background: rgb(0 0 0 / 30%);
+  backdrop-filter: blur(8px);
+  transition: transform 0.35s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)),
+    background-color 0.3s, border-color 0.3s;
+}
+
+button.embed-placeholder:hover .embed-placeholder-play-btn,
+button.embed-placeholder:focus-visible .embed-placeholder-play-btn {
+  transform: scale(1.12);
+  background: rgb(0 0 0 / 45%);
+  border-color: var(--color-gold);
+}
+
+.embed-placeholder-play-btn::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  width: 0;
+  height: 18px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 14px solid rgb(255 255 255 / 90%);
+  margin-left: 4px;
+}
+
 /* ==========================================================================
    Video Column variant — headline + body (left), embedded video (right).
    Matches the Microchip data-center "player" block: two equal columns that
