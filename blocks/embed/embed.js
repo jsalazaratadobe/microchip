@@ -16,16 +16,20 @@ const getDefaultEmbed = (url, fixedHeight) => `<div style="${getEmbedContainerSt
     </iframe>
   </div>`;
 
-const embedYoutube = (url, autoplay, fixedHeight) => {
+/** Extract a YouTube video id from a watch/short/embed URL. */
+const getYoutubeId = (url) => {
   const usp = new URLSearchParams(url.search);
+  if (usp.get('v')) return encodeURIComponent(usp.get('v'));
+  const seg = url.pathname.split('/').filter(Boolean).pop();
+  return seg ? encodeURIComponent(seg) : '';
+};
+
+const embedYoutube = (url, autoplay, fixedHeight) => {
+  const vid = getYoutubeId(url);
   const suffix = autoplay ? '&muted=1&autoplay=1' : '';
-  let vid = usp.get('v') ? encodeURIComponent(usp.get('v')) : '';
-  const embed = url.pathname;
-  if (url.origin.includes('youtu.be')) {
-    [, vid] = url.pathname.split('/');
-  }
+  // youtube-nocookie.com avoids setting tracking cookies until playback.
   const embedHTML = `<div style="${getEmbedContainerStyle(fixedHeight)}">
-      <iframe src="https://www.youtube.com${vid ? `/embed/${vid}?rel=0&v=${vid}${suffix}` : embed}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
+      <iframe src="https://www.youtube-nocookie.com${vid ? `/embed/${vid}?rel=0${suffix}` : url.pathname}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
       allow="autoplay; fullscreen; picture-in-picture; encrypted-media; accelerometer; gyroscope; picture-in-picture" allowfullscreen="" scrolling="no" title="Content from Youtube" loading="lazy"></iframe>
     </div>`;
   return embedHTML;
@@ -92,6 +96,51 @@ const loadEmbed = (block, link, autoplay, fixedHeight) => {
 };
 
 /*
+ * Build a lightweight click-to-play facade for a video. Renders only a
+ * thumbnail + play button; the heavy third-party player (and its scripts and
+ * cookies) loads on click. Dramatically cuts unused JS/CSS and avoids setting
+ * third-party cookies on page load. Returns the facade element.
+ */
+function buildVideoFacade(link, fixedHeight, providedPoster) {
+  const facade = document.createElement('div');
+  facade.className = 'embed embed-facade';
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'embed-placeholder';
+  button.setAttribute('aria-label', 'Play video');
+  if (fixedHeight) {
+    button.style.aspectRatio = 'auto';
+    button.style.height = `${fixedHeight}px`;
+  }
+
+  let poster = providedPoster;
+  if (!poster) {
+    try {
+      const url = new URL(link);
+      if (/youtube|youtu\.be/.test(url.hostname)) {
+        const vid = getYoutubeId(url);
+        if (vid) {
+          poster = document.createElement('img');
+          poster.src = `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`;
+          poster.alt = '';
+          poster.loading = 'lazy';
+        }
+      }
+    } catch (e) { /* no poster */ }
+  }
+  if (poster) button.append(poster);
+  button.insertAdjacentHTML('beforeend', '<span class="embed-placeholder-play"><span class="embed-placeholder-play-btn" aria-hidden="true"></span></span>');
+
+  button.addEventListener('click', () => {
+    loadEmbed(facade, link, true, fixedHeight);
+  });
+
+  facade.append(button);
+  return facade;
+}
+
+/*
  * Video Column variant: two columns — a headline + body on the left and an
  * embedded video on the right (matches the Microchip data-center "player"
  * block). Authoring contract is a single row with two cells:
@@ -127,17 +176,11 @@ function decorateVideoColumn(block) {
     block.prepend(head);
   }
 
+  // Click-to-play facade: no player scripts/cookies load until the user clicks.
   const media = document.createElement('div');
-  media.className = 'embed embed-video-column-player';
+  media.className = 'embed-video-column-player';
+  media.append(buildVideoFacade(link, null));
   videoCell.append(media);
-
-  const observer = new IntersectionObserver((entries) => {
-    if (entries.some((e) => e.isIntersecting)) {
-      observer.disconnect();
-      loadEmbed(media, link, false, null);
-    }
-  });
-  observer.observe(media);
   return row;
 }
 
@@ -150,9 +193,11 @@ export default function decorate(block) {
   const placeholder = block.querySelector('picture');
   const link = block.querySelector('a').href;
   const fixedHeight = getFixedHeight(block);
+  const isVideo = /youtube|youtu\.be|vimeo/.test(link);
   block.textContent = '';
 
   if (placeholder) {
+    // Authored poster image: build a click-to-play facade around it.
     const wrapper = document.createElement('div');
     wrapper.className = 'embed-placeholder';
     if (fixedHeight) {
@@ -165,7 +210,13 @@ export default function decorate(block) {
       loadEmbed(block, link, true, fixedHeight);
     });
     block.append(wrapper);
+  } else if (isVideo) {
+    // Video with no authored poster: facade (auto thumbnail) — loads the
+    // player only on click, so no third-party scripts/cookies on page load.
+    block.append(buildVideoFacade(link, fixedHeight));
+    block.classList.add('embed-is-facade');
   } else {
+    // Non-video embeds (e.g. social) still lazy-load when scrolled into view.
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         observer.disconnect();
